@@ -60,6 +60,9 @@ var rootCmd = &cobra.Command{
 	Run: func(cmd *cobra.Command, args []string) {
 		var err error
 
+		// Start output with new line.
+		fmt.Println("")
+
 		if falconCloud == "" {
 			falconCloud, err = prompt.PromptCloud()
 			if err != nil {
@@ -147,7 +150,7 @@ var rootCmd = &cobra.Command{
 				return
 			}
 
-			fmt.Printf("Using cid: %s\n\n", cid)
+			fmt.Printf("Using cid: %s\n", cid)
 			falconCid = cid
 		}
 
@@ -254,14 +257,6 @@ var rootCmd = &cobra.Command{
 					ac.Cloud.String(),
 				),
 			},
-			// {
-			// 	Filter:      "dsfjlksdf",
-			// 	OsShortName: "windows",
-			// 	BucketPrefix: fmt.Sprintf(
-			// 		"crowdstrike/falcon/%s/windows",
-			// 		ac.Cloud.String(),
-			// 	),
-			// },
 		}
 
 		var storageSyncModel tui.StorageSyncModel
@@ -366,7 +361,7 @@ var rootCmd = &cobra.Command{
 			return
 		}
 
-		fmt.Println("Policies created succesfully.")
+		fmt.Println("Policy Assignments created succesfully.")
 	},
 }
 
@@ -399,6 +394,7 @@ func processZones(policyFilePath string) error {
 	p := tea.NewProgram(policyModel)
 
 	fmt.Println("Creating GCP OS Policy Assignments...")
+
 	go func() {
 		p.Run()
 	}()
