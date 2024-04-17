@@ -9,7 +9,7 @@ import (
 	"github.com/crowdstrike/gofalcon/falcon/client/sensor_download"
 )
 
-func Cid(client *client.CrowdStrikeAPISpecification) (string, error) {
+func CID(client *client.CrowdStrikeAPISpecification) (string, error) {
 	resp, err := client.SensorDownload.GetSensorInstallersCCIDByQuery(
 		&sensor_download.GetSensorInstallersCCIDByQueryParams{
 			Context: context.Background(),

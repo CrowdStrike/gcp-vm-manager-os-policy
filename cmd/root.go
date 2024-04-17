@@ -139,7 +139,7 @@ var rootCmd = &cobra.Command{
 		if falconCid == "" {
 			fmt.Println("No cid provided, grabbing cid...")
 
-			cid, err := falconutil.Cid(client)
+			cid, err := falconutil.CID(client)
 			if err != nil {
 				fmt.Println(
 					errorsutil.DefaultError("Unexpected error while grabbing cid.", err),
