@@ -88,7 +88,7 @@ OS Policy is a feature of GCP VM Manager. In order to use OS Policies to deploy 
 2. Run the tool.
 
     ```bash
-    REPLACE_ME --bucket example-bucket --zone us-central1-a,us-central1-b 
+    REPLACE_ME --bucket example-bucket --zone us-central1-a,us-central1-b --linux-install-params='--tags="Washington/DC_USA,Production" --aph=proxy.example.com --app=8080' --windows-install-params='GROUPING_TAGS="Washington/DC_USA,Production" APP_PROXYNAME=proxy.example.com APP_PROXYPORT=8080'
     ```
 
     Use the `--help` flag to see all available options and more examples.

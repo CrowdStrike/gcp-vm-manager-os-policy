@@ -318,7 +318,6 @@ var rootCmd = &cobra.Command{
 			falconCid,
 			linuxInstallParams,
 			windowsInstallParams,
-			storageBucket,
 			sensors,
 			inclusionLabels,
 			exclusionLabels,
@@ -434,9 +433,9 @@ func init() {
 	rootCmd.Flags().
 		StringVar(&falconCid, "falcon-cid", "", "Falcon CID to use on install. Can also bet set by the FALCON_CID environment variable. Will be pulled from the api if not provided")
 	rootCmd.Flags().
-		StringVar(&linuxInstallParams, "linux-install-params", "", "The parameters to pass at install time on Linux machines")
+		StringVar(&linuxInstallParams, "linux-install-params", "", "The parameters to pass at install time on Linux machines (excluding CID)")
 	rootCmd.Flags().
-		StringVar(&windowsInstallParams, "windows-install-params", "", "The parameters to pass at install time on Windows machines")
+		StringVar(&windowsInstallParams, "windows-install-params", "", "The parameters to pass at install time on Windows machines (excluding CID)")
 	rootCmd.Flags().
 		StringVar(&storageBucket, "bucket", "", "GCP cloud storage bucket to upload sensor binaries")
 	rootCmd.Flags().
