@@ -48,7 +48,7 @@
                   "interpreter": "SHELL"
                 },
                 "enforce": {
-                  "script": "/opt/CrowdStrike/falconctl -sf --cid={{ .Cid }}\nif [[ -L \"/sbin/init\" ]]\nthen\n    systemctl start falcon-sensor\nelse\n    sudo service falcon-sensor start\nfi\nif pgrep  -u root falcon-sensor >/dev/null 2>&1 ; then\n  exit 100\nfi\nexit 101\n",
+                  "script": "/opt/CrowdStrike/falconctl -sf {{.LinuxInstallParams}}\nif [[ -L \"/sbin/init\" ]]\nthen\n    systemctl start falcon-sensor\nelse\n    sudo service falcon-sensor start\nfi\nif pgrep  -u root falcon-sensor >/dev/null 2>&1 ; then\n  exit 100\nfi\nexit 101\n",
                   "interpreter": "SHELL"
                 }
               }
@@ -99,7 +99,7 @@
                   "interpreter": "SHELL"
                 },
                 "enforce": {
-                  "script": "/opt/CrowdStrike/falconctl -sf --cid={{ .Cid }}\nif [[ -L \"/sbin/init\" ]]\nthen\n    systemctl start falcon-sensor\nelse\n    sudo service falcon-sensor start\nfi\nif pgrep  -u root falcon-sensor >/dev/null 2>&1 ; then\n  exit 100\nfi\nexit 101\n",
+                  "script": "/opt/CrowdStrike/falconctl -sf {{ .LinuxInstallParams }}\nif [[ -L \"/sbin/init\" ]]\nthen\n    systemctl start falcon-sensor\nelse\n    sudo service falcon-sensor start\nfi\nif pgrep  -u root falcon-sensor >/dev/null 2>&1 ; then\n  exit 100\nfi\nexit 101\n",
                   "interpreter": "SHELL"
                 }
               }
@@ -150,7 +150,7 @@
                   "interpreter": "SHELL"
                 },
                 "enforce": {
-                  "script": "/opt/CrowdStrike/falconctl -sf --cid={{ .Cid }}\nif [[ -L \"/sbin/init\" ]]\nthen\n    systemctl start falcon-sensor\nelse\n    sudo service falcon-sensor start\nfi\nif pgrep  -u root falcon-sensor >/dev/null 2>&1 ; then\n  exit 100\nfi\nexit 101\n",
+                  "script": "/opt/CrowdStrike/falconctl -sf {{ .LinuxInstallParams }}\nif [[ -L \"/sbin/init\" ]]\nthen\n    systemctl start falcon-sensor\nelse\n    sudo service falcon-sensor start\nfi\nif pgrep  -u root falcon-sensor >/dev/null 2>&1 ; then\n  exit 100\nfi\nexit 101\n",
                   "interpreter": "SHELL"
                 }
               }
@@ -189,7 +189,7 @@
                   "interpreter": "SHELL"
                 },
                 "enforce": {
-                  "script": "/opt/CrowdStrike/falconctl -sf --cid={{ .Cid }}\nif [[ -L \"/sbin/init\" ]]\nthen\n    systemctl start falcon-sensor\nelse\n    sudo service falcon-sensor start\nfi\nif pgrep  -u root falcon-sensor >/dev/null 2>&1 ; then\n  exit 100\nfi\nexit 101\n",
+                  "script": "/opt/CrowdStrike/falconctl -sf {{ .LinuxInstallParams }}\nif [[ -L \"/sbin/init\" ]]\nthen\n    systemctl start falcon-sensor\nelse\n    sudo service falcon-sensor start\nfi\nif pgrep  -u root falcon-sensor >/dev/null 2>&1 ; then\n  exit 100\nfi\nexit 101\n",
                   "interpreter": "SHELL"
                 }
               }
@@ -228,7 +228,7 @@
                   "interpreter": "SHELL"
                 },
                 "enforce": {
-                  "script": "/opt/CrowdStrike/falconctl -sf --cid={{ .Cid }}\nif [[ -L \"/sbin/init\" ]]\nthen\n    systemctl start falcon-sensor\nelse\n    sudo service falcon-sensor start\nfi\nif pgrep  -u root falcon-sensor >/dev/null 2>&1 ; then\n  exit 100\nfi\nexit 101\n",
+                  "script": "/opt/CrowdStrike/falconctl -sf {{ .LinuxInstallParams }}\nif [[ -L \"/sbin/init\" ]]\nthen\n    systemctl start falcon-sensor\nelse\n    sudo service falcon-sensor start\nfi\nif pgrep  -u root falcon-sensor >/dev/null 2>&1 ; then\n  exit 100\nfi\nexit 101\n",
                   "interpreter": "SHELL"
                 }
               }
@@ -267,7 +267,7 @@
                   "interpreter": "SHELL"
                 },
                 "enforce": {
-                  "script": "/opt/CrowdStrike/falconctl -sf --cid={{ .Cid }}\nif [[ -L \"/sbin/init\" ]]\nthen\n    systemctl start falcon-sensor\nelse\n    sudo service falcon-sensor start\nfi\nif pgrep  -u root falcon-sensor >/dev/null 2>&1 ; then\n  exit 100\nfi\nexit 101\n",
+                  "script": "/opt/CrowdStrike/falconctl -sf {{ .LinuxInstallParams }}\nif [[ -L \"/sbin/init\" ]]\nthen\n    systemctl start falcon-sensor\nelse\n    sudo service falcon-sensor start\nfi\nif pgrep  -u root falcon-sensor >/dev/null 2>&1 ; then\n  exit 100\nfi\nexit 101\n",
                   "interpreter": "SHELL"
                 }
               }
@@ -306,7 +306,7 @@
                   "interpreter": "SHELL"
                 },
                 "enforce": {
-                  "script": "/opt/CrowdStrike/falconctl -sf --cid={{ .Cid }}\nif [[ -L \"/sbin/init\" ]]\nthen\n    systemctl start falcon-sensor\nelse\n    sudo service falcon-sensor start\nfi\nif pgrep  -u root falcon-sensor >/dev/null 2>&1 ; then\n  exit 100\nfi\nexit 101\n",
+                  "script": "/opt/CrowdStrike/falconctl -sf {{ .LinuxInstallParams }}\nif [[ -L \"/sbin/init\" ]]\nthen\n    systemctl start falcon-sensor\nelse\n    sudo service falcon-sensor start\nfi\nif pgrep  -u root falcon-sensor >/dev/null 2>&1 ; then\n  exit 100\nfi\nexit 101\n",
                   "interpreter": "SHELL"
                 }
               }
@@ -344,7 +344,7 @@
                   "interpreter": "SHELL"
                 },
                 "enforce": {
-                  "script": "/opt/CrowdStrike/falconctl -sf --cid={{ .Cid }}\nif [ -L \"/sbin/init\" ]\nthen\n    systemctl start falcon-sensor\nelse\n    sudo service falcon-sensor start\nfi\nif pgrep  -u root falcon-sensor >/dev/null 2>&1 ; then\n  exit 100\nfi\nexit 101\n",
+                  "script": "/opt/CrowdStrike/falconctl -sf {{ .LinuxInstallParams }}\nif [ -L \"/sbin/init\" ]\nthen\n    systemctl start falcon-sensor\nelse\n    sudo service falcon-sensor start\nfi\nif pgrep  -u root falcon-sensor >/dev/null 2>&1 ; then\n  exit 100\nfi\nexit 101\n",
                   "interpreter": "SHELL"
                 }
               }
@@ -382,7 +382,7 @@
                   "interpreter": "SHELL"
                 },
                 "enforce": {
-                  "script": "/opt/CrowdStrike/falconctl -sf --cid={{ .Cid }}\nif [ -L \"/sbin/init\" ]\nthen\n    systemctl start falcon-sensor\nelse\n    sudo service falcon-sensor start\nfi\nif pgrep  -u root falcon-sensor >/dev/null 2>&1 ; then\n  exit 100\nfi\nexit 101\n",
+                  "script": "/opt/CrowdStrike/falconctl -sf {{ .LinuxInstallParams }}\nif [ -L \"/sbin/init\" ]\nthen\n    systemctl start falcon-sensor\nelse\n    sudo service falcon-sensor start\nfi\nif pgrep  -u root falcon-sensor >/dev/null 2>&1 ; then\n  exit 100\nfi\nexit 101\n",
                   "interpreter": "SHELL"
                 }
               }
@@ -421,7 +421,7 @@
                   "interpreter": "SHELL"
                 },
                 "enforce": {
-                  "script": "/opt/CrowdStrike/falconctl -sf --cid={{ .Cid }}\nif [[ -L \"/sbin/init\" ]]\nthen\n    systemctl start falcon-sensor\nelse\n    sudo service falcon-sensor start\nfi\nif pgrep  -u root falcon-sensor >/dev/null 2>&1 ; then\n  exit 100\nfi\nexit 101\n",
+                  "script": "/opt/CrowdStrike/falconctl -sf {{ .LinuxInstallParams }}\nif [[ -L \"/sbin/init\" ]]\nthen\n    systemctl start falcon-sensor\nelse\n    sudo service falcon-sensor start\nfi\nif pgrep  -u root falcon-sensor >/dev/null 2>&1 ; then\n  exit 100\nfi\nexit 101\n",
                   "interpreter": "SHELL"
                 }
               }
@@ -460,7 +460,7 @@
                   "interpreter": "SHELL"
                 },
                 "enforce": {
-                  "script": "/opt/CrowdStrike/falconctl -sf --cid={{ .Cid }}\nif [[ -L \"/sbin/init\" ]]\nthen\n    systemctl start falcon-sensor\nelse\n    sudo service falcon-sensor start\nfi\nif pgrep  -u root falcon-sensor >/dev/null 2>&1 ; then\n  exit 100\nfi\nexit 101\n",
+                  "script": "/opt/CrowdStrike/falconctl -sf {{ .LinuxInstallParams }}\nif [[ -L \"/sbin/init\" ]]\nthen\n    systemctl start falcon-sensor\nelse\n    sudo service falcon-sensor start\nfi\nif pgrep  -u root falcon-sensor >/dev/null 2>&1 ; then\n  exit 100\nfi\nexit 101\n",
                   "interpreter": "SHELL"
                 }
               }
@@ -499,7 +499,7 @@
                   "interpreter": "SHELL"
                 },
                 "enforce": {
-                  "script": "/opt/CrowdStrike/falconctl -sf --cid={{ .Cid }}\nif [[ -L \"/sbin/init\" ]]\nthen\n    systemctl start falcon-sensor\nelse\n    sudo service falcon-sensor start\nfi\nif pgrep  -u root falcon-sensor >/dev/null 2>&1 ; then\n  exit 100\nfi\nexit 101\n",
+                  "script": "/opt/CrowdStrike/falconctl -sf {{ .LinuxInstallParams }}\nif [[ -L \"/sbin/init\" ]]\nthen\n    systemctl start falcon-sensor\nelse\n    sudo service falcon-sensor start\nfi\nif pgrep  -u root falcon-sensor >/dev/null 2>&1 ; then\n  exit 100\nfi\nexit 101\n",
                   "interpreter": "SHELL"
                 }
               }
@@ -536,7 +536,7 @@
                   "interpreter": "POWERSHELL"
                 },
                 "enforce": {
-                  "script": "$installArguments = @(\n    , '/install'\n    , '/quiet'\n    , '/norestart'\n    , \"CID={{ .Cid }}\"\n    , 'ProvWaitTime=1200000'\n)\n$installerProcess = Start-Process -FilePath \"C:\\\\Windows\\\\SystemTemp\\\\falcon-sensor.exe\" -ArgumentList $installArguments -PassThru -Wait\n\nif ($installerProcess.ExitCode -ne 0) {\n    Write-Output \"Installer returned exit code $($installerProcess.ExitCode)\"\n    Exit 101\n}\n\n$agentService = Get-Service -Name CSAgent -ErrorAction SilentlyContinue\nif (-not $agentService) {\n    Write-Output 'Installer completed, but CSAgent service is missing...'\n    Exit 101\n}\nelseif ($agentService.Status -eq 'Running') {\n    Write-Output 'CSAgent service running...'\n    Exit 100\n}\nelse {\n    Write-Output 'Installer completed, but CSAgent service is not running...'\n    Exit 101\n}\n",
+                  "script": "$installArguments = @({{ .WindowsInstallParams }})\n$installerProcess = Start-Process -FilePath \"C:\\\\Windows\\\\SystemTemp\\\\falcon-sensor.exe\" -ArgumentList $installArguments -PassThru -Wait\n\nif ($installerProcess.ExitCode -ne 0) {\n    Write-Output \"Installer returned exit code $($installerProcess.ExitCode)\"\n    Exit 101\n}\n\n$agentService = Get-Service -Name CSAgent -ErrorAction SilentlyContinue\nif (-not $agentService) {\n    Write-Output 'Installer completed, but CSAgent service is missing...'\n    Exit 101\n}\nelseif ($agentService.Status -eq 'Running') {\n    Write-Output 'CSAgent service running...'\n    Exit 100\n}\nelse {\n    Write-Output 'Installer completed, but CSAgent service is not running...'\n    Exit 101\n}\n",
                   "interpreter": "POWERSHELL"
                 }
               }

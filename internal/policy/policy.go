@@ -53,8 +53,7 @@ type Policy struct {
 func NewPolicy(
 	cid string,
 	linuxInstallParams string,
-	windowsInstallParams,
-	bucket string,
+	windowsInstallParams string,
 	sensors []*sensor.Sensor,
 	inclusionLabels []string,
 	exclusionLabels []string,
@@ -62,8 +61,8 @@ func NewPolicy(
 	var policy Policy
 
 	policy.Cid = cid
-	policy.LinuxInstallParams = linuxInstallParams
-	policy.WindowsInstallParams = windowsInstallParams
+	policy.LinuxInstallParams = formatLinuxArgs(cid, linuxInstallParams)
+	policy.WindowsInstallParams = formatWinArgs(cid, windowsInstallParams)
 
 	osVersionToField := map[string]*osResource{
 		"sles11*":  &policy.Sles11,
@@ -204,4 +203,30 @@ func (a *Assignment) RollOut(ctx context.Context) error {
 	}
 
 	return nil
+}
+
+func formatWinArgs(cid string, args string) string {
+	sArgs := strings.Split(args, " ")
+	for i, arg := range sArgs {
+		if !strings.HasPrefix(arg, "'") {
+			sArgs[i] = "'" + arg
+		}
+
+		if !strings.HasSuffix(arg, "'") {
+			sArgs[i] = sArgs[i] + "'"
+		}
+	}
+
+	params := fmt.Sprintf(
+		"'/install', '/quiet', '/norestart', 'CID=%s', %s",
+		cid,
+		strings.Join(sArgs, ", "),
+	)
+
+	return strings.ReplaceAll(params, "\"", "\\\"")
+}
+
+func formatLinuxArgs(cid string, args string) string {
+	params := fmt.Sprintf("--cid=%s %s", cid, args)
+	return strings.ReplaceAll(params, "\"", "\\\"")
 }
