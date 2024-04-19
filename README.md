@@ -1,4 +1,4 @@
-# gcp-os-policy
+# cs-policy
 
 A helper tool for deploying CrowdStrike OS Poilcies to GCP Zones. This tool automates many of the manual steps required to create & deploy OS Policies to GCP VMs.
 
@@ -77,23 +77,28 @@ OS Policy is a feature of GCP VM Manager. In order to use OS Policies to deploy 
     ```bash
     gcloud auth application-default login
     ```
-> Note: There are other ways to authenticate with GCP like using a service account. Use whichever method is best for your environment. The REPLACE_ME tool will find the credentials and use them.
-2. OPTIONAL: Export the CrowdStrike API keys as environment variables. Alternatively you can provide the keys as command line arguments.
+> Note: There are other ways to authenticate with GCP like using a service account. Use whichever method is best for your environment. The `cs-policy` tool will find the credentials and use them.
+2. Set the project to the project you want to deploy the OS Policies to.
 
     ```bash
-    export FALCON_CLIENT_ID=REPLACE_ME
-    export FALCON_CLIENT_SECRET=REPLACE_ME
-    export FALCON_CLOUD=REPLACE_ME
+    gcloud config set project cs-policy
+    ``` 
+3. OPTIONAL: Export the CrowdStrike API keys as environment variables. Alternatively you can provide the keys as command line arguments.
+
+    ```bash
+    export FALCON_CLIENT_ID=cs-policy
+    export FALCON_CLIENT_SECRET=cs-policy
+    export FALCON_CLOUD=cs-policy
     ```
-2. Run the tool.
+4. Run the tool.
 
     ```bash
-    REPLACE_ME --bucket example-bucket --zone us-central1-a,us-central1-b --linux-install-params='--tags="Washington/DC_USA,Production" --aph=proxy.example.com --app=8080' --windows-install-params='GROUPING_TAGS="Washington/DC_USA,Production" APP_PROXYNAME=proxy.example.com APP_PROXYPORT=8080'
+    cs-policy create --bucket example-bucket --zone us-central1-a,us-central1-b --linux-install-params='--tags="Washington/DC_USA,Production" --aph=proxy.example.com --app=8080' --windows-install-params='GROUPING_TAGS="Washington/DC_USA,Production" APP_PROXYNAME=proxy.example.com APP_PROXYPORT=8080'
     ```
 
     Use the `--help` flag to see all available options and more examples.
 
     ```bash
-    REPLACE_ME --help
+    cs-policy --help
     ```
 

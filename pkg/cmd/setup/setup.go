@@ -1,4 +1,4 @@
-package cmd
+package setup
 
 import (
 	"context"
@@ -36,11 +36,11 @@ var skipWait bool
 var inclusionLabels []string
 var exclusionLabels []string
 
-// rootCmd represents the base command when called without any subcommands
-var rootCmd = &cobra.Command{
-	Use:   "gcp-os-policy",
-	Short: "Simple CLI to bootstrap the falcon sensor gcp os policy",
-	Long: `Simple CLI to automate steps that are required to deploy the falcon sensor using GCP OS Policies.
+// createCmd represents the base cs-policy setup when called without any ubcommands
+var createCmd = &cobra.Command{
+	Use:   "create [flags]",
+	Short: "Create GCP OS Policy Assignments for Falcon Sensor deployment",
+	Long: `Create GCP OS Policy Assignments for Falcon Sensor deployment 
 
   The following is done on behalf of the user:
     - Download the n-1 version of the falcon sensor
@@ -48,16 +48,14 @@ var rootCmd = &cobra.Command{
     - Modify the falcon sensor gcp os policy to use the binaries in cloud storage bucket
     - Create OS Policy Assignments in the targeted zones`,
 	Example: heredoc.Doc(`
-    Target all VMs in the us-central1-a zone
-    $ command --zones=us-central1-a
+    Target all VMs in the us-central1-a and us-central-b zones
+    $ cs-policy setup --zones=us-central1-a,us-central-b --buckt=my-bucket
 
-    Target only instances that contain the Env:Prod AND Type:Webserver label:value
-    $ command --include-labelset=Env:Prod,Type:Webserver --zones=us-central1-a
-
-    Target instances that contain the Env:Prod OR Type:Webserver label:value
-    $ command --include-labelset=Env:Prod,Type:Webserver --zones=us-central1-a
+    Target all VMs in the us-central1-a zone with custom install parameters
+    $ cs-policy setup --bucket example-bucket --zone us-central1-a --linux-install-params='--tags="Washington/DC_USA,Production" --aph=proxy.example.com --app=8080' --windows-install-params='GROUPING_TAGS="Washington/DC_USA,Production" APP_PROXYNAME=proxy.example.com APP_PROXYPORT=8080'
     `),
-	Run: func(cmd *cobra.Command, args []string) {
+	Args: cobra.ExactArgs(0),
+	Run: func(_ *cobra.Command, _ []string) {
 		var err error
 
 		// Start output with new line.
@@ -365,6 +363,10 @@ var rootCmd = &cobra.Command{
 	},
 }
 
+func NewSetupCmd() *cobra.Command {
+	return createCmd
+}
+
 // processZones handles the logic to create os policy assignments in each gcp compute zone
 func processZones(policyFilePath string) error {
 	policyModel := tui.NewPolicyModel()
@@ -410,40 +412,32 @@ func processZones(policyFilePath string) error {
 	return nil
 }
 
-// Execute adds all child commands to the root command and sets flags appropriately.
-func Execute() {
-	err := rootCmd.Execute()
-	if err != nil {
-		os.Exit(1)
-	}
-}
-
 func init() {
 	dir, _ := os.Getwd()
-	rootCmd.PersistentFlags().
+	createCmd.PersistentFlags().
 		StringVar(&falconClientId, "falcon-client-id", "", "Falcon API Client Id. Can also bet set by the FALCON_CLIENT_ID environment variable")
-	rootCmd.PersistentFlags().
+	createCmd.PersistentFlags().
 		StringVar(&falconClientSecret, "falcon-client-secret", "", "Falcon API Client Secret. Can also bet set by the FALCON_CLIENT_SECRET environment variable")
-	rootCmd.PersistentFlags().
+	createCmd.PersistentFlags().
 		StringVar(&falconCloud, "falcon-cloud", "", "Falcon Cloud one of autodiscover, us-1, us-2, eu-1, us-gov-1. Can also bet set by the FALCON_CLOUD environment variable")
-	rootCmd.Flags().
+	createCmd.Flags().
 		StringVar(&falconCid, "falcon-cid", "", "Falcon CID to use on install. Can also bet set by the FALCON_CID environment variable. Will be pulled from the api if not provided")
-	rootCmd.Flags().
+	createCmd.Flags().
 		StringVar(&linuxInstallParams, "linux-install-params", "", "The parameters to pass at install time on Linux machines (excluding CID)")
-	rootCmd.Flags().
+	createCmd.Flags().
 		StringVar(&windowsInstallParams, "windows-install-params", "", "The parameters to pass at install time on Windows machines (excluding CID)")
-	rootCmd.Flags().
+	createCmd.Flags().
 		StringVar(&storageBucket, "bucket", "", "GCP cloud storage bucket to upload sensor binaries")
-	rootCmd.Flags().
+	createCmd.Flags().
 		StringVar(&outputDir, "output-dir", dir, "GCP OS Policy template output directory")
-	rootCmd.Flags().StringSliceVar(&zones, "zones", []string{}, "GCP compute zones to deploy to")
-	rootCmd.Flags().
+	createCmd.Flags().StringSliceVar(&zones, "zones", []string{}, "GCP compute zones to deploy to")
+	createCmd.Flags().
 		BoolVar(&skipWait, "skip-wait", false, "Skip waiting for the rollout of GCP OS Policy Assignments to complete")
 	// rootCmd.Flags().
 	// 	StringArrayVar(&inclusionLabels, "include-labelset", []string{}, "A comma seperated list of labels. In the format of labelName:labelValue. Matches only if a VM has all the labels in the labelset. Example: Label:Value,Env:Prod")
 	// rootCmd.Flags().
 	// 	StringArrayVar(&exclusionLabels, "exclude-labelset", []string{}, "A comma seperated list of labels. In the format of labelName:labelValue. Matches only if a VM has none of the labels in the labelset. Example: Label:Value,Env:Prod")
-	rootCmd.MarkFlagRequired("zones")
+	createCmd.MarkFlagRequired("zones")
 
 	if falconClientId == "" {
 		falconClientId = os.Getenv("FALCON_CLIENT_ID")
