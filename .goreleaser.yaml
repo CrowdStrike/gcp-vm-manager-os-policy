@@ -1,6 +1,6 @@
 version: 1
 
-project_name: replace_me
+project_name: cs-policy
 
 release:
   prerelease: auto
