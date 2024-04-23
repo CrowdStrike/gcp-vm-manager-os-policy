@@ -1,4 +1,4 @@
-package setup
+package create
 
 import (
 	"context"
@@ -36,7 +36,7 @@ var skipWait bool
 var inclusionLabels []string
 var exclusionLabels []string
 
-// createCmd represents the base cs-policy setup when called without any ubcommands
+// createCmd represents the base cs-policy create when called without any ubcommands
 var createCmd = &cobra.Command{
 	Use:   "create [flags]",
 	Short: "Create GCP OS Policy Assignments for Falcon Sensor deployment",
@@ -49,10 +49,10 @@ var createCmd = &cobra.Command{
     - Create OS Policy Assignments in the targeted zones`,
 	Example: heredoc.Doc(`
     Target all VMs in the us-central1-a and us-central-b zones
-    $ cs-policy setup --zones=us-central1-a,us-central-b --buckt=my-bucket
+    $ cs-policy create --zones=us-central1-a,us-central-b --buckt=my-bucket
 
     Target all VMs in the us-central1-a zone with custom install parameters
-    $ cs-policy setup --bucket example-bucket --zone us-central1-a --linux-install-params='--tags="Washington/DC_USA,Production" --aph=proxy.example.com --app=8080' --windows-install-params='GROUPING_TAGS="Washington/DC_USA,Production" APP_PROXYNAME=proxy.example.com APP_PROXYPORT=8080'
+    $ cs-policy create --bucket example-bucket --zone us-central1-a --linux-install-params='--tags="Washington/DC_USA,Production" --aph=proxy.example.com --app=8080' --windows-install-params='GROUPING_TAGS="Washington/DC_USA,Production" APP_PROXYNAME=proxy.example.com APP_PROXYPORT=8080'
     `),
 	Args: cobra.ExactArgs(0),
 	Run: func(_ *cobra.Command, _ []string) {
@@ -363,7 +363,7 @@ var createCmd = &cobra.Command{
 	},
 }
 
-func NewSetupCmd() *cobra.Command {
+func NewCreateCmd() *cobra.Command {
 	return createCmd
 }
 

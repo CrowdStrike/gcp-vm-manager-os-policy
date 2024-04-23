@@ -77,7 +77,6 @@ func (m StorageSyncModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 
 func (m StorageSyncModel) View() string {
 	s := strings.Builder{}
-	s.WriteString("\n")
 
 	prefix := "Ensuring binaries exist in bucket... "
 	s.WriteString(prefix)

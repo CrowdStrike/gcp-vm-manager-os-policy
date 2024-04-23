@@ -4,7 +4,7 @@ import (
 	"os"
 
 	"github.com/MakeNowJust/heredoc"
-	"github.com/crowdstrike/gcp-os-policy/pkg/cmd/setup"
+	createCmd "github.com/crowdstrike/gcp-os-policy/pkg/cmd/create"
 	"github.com/spf13/cobra"
 )
 
@@ -13,13 +13,13 @@ var rootCmd = &cobra.Command{
 	Use:   "cs-policy <command> [flags]",
 	Short: "cs-policy CLI",
 	Example: heredoc.Doc(`
-    $ cs-policy setup --help
+    $ cs-policy create --help
     `),
 }
 
 // Execute adds all child commands to the root cs-policy setup and sets flags appropriately.
 func Execute() {
-	rootCmd.AddCommand(setup.NewSetupCmd())
+	rootCmd.AddCommand(createCmd.NewCreateCmd())
 
 	err := rootCmd.Execute()
 	if err != nil {
