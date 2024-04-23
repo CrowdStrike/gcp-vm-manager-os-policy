@@ -70,6 +70,10 @@ OS Policy is a feature of GCP VM Manager. In order to use OS Policies to deploy 
 
 > Note: This page is only shown once. Make sure you copy **CLIENT ID**, **SECRET**, and **BASE URL** to a secure location.
 
+## Installation
+
+[Download release binaries](https://github.com/CrowdStrike/gcp-os-policy/releases/latest) that match your platform
+
 ## Usage
 
 1. Authenticate with the gcloud CLI.
@@ -93,7 +97,7 @@ OS Policy is a feature of GCP VM Manager. In order to use OS Policies to deploy 
 4. Run the tool.
 
     ```bash
-    cs-policy create --bucket example-bucket --zone us-central1-a,us-central1-b --linux-install-params='--tags="Washington/DC_USA,Production" --aph=proxy.example.com --app=8080' --windows-install-params='GROUPING_TAGS="Washington/DC_USA,Production" APP_PROXYNAME=proxy.example.com APP_PROXYPORT=8080'
+    cs-policy create --bucket=example-bucket --zones=us-central1-a,us-central1-b --linux-install-params='--tags="Washington/DC_USA,Production" --aph=proxy.example.com --app=8080' --windows-install-params='GROUPING_TAGS="Washington/DC_USA,Production" APP_PROXYNAME=proxy.example.com APP_PROXYPORT=8080'
     ```
 
     Use the `--help` flag to see all available options and more examples.
