@@ -90,9 +90,9 @@ OS Policy is a feature of GCP VM Manager. In order to use OS Policies to deploy 
 3. OPTIONAL: Export the CrowdStrike API keys as environment variables. Alternatively you can provide the keys as command line arguments.
 
     ```bash
-    export FALCON_CLIENT_ID=cs-policy
-    export FALCON_CLIENT_SECRET=cs-policy
-    export FALCON_CLOUD=cs-policy
+    export FALCON_CLIENT_ID=********
+    export FALCON_CLIENT_SECRET=********
+    export FALCON_CLOUD=********
     ```
 4. Run the tool.
 
