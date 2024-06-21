@@ -206,22 +206,22 @@ func (a *Assignment) RollOut(ctx context.Context) error {
 }
 
 func formatWinArgs(cid string, args string) string {
-	sArgs := strings.Split(args, " ")
-	for i, arg := range sArgs {
-		if !strings.HasPrefix(arg, "'") {
-			sArgs[i] = "'" + arg
+	params := fmt.Sprintf("'/install', '/quiet', '/norestart', 'CID=%s'", cid)
+
+	if len(args) > 0 {
+		sArgs := strings.Split(args, " ")
+		for i, arg := range sArgs {
+			if !strings.HasPrefix(arg, "'") {
+				sArgs[i] = "'" + arg
+			}
+
+			if !strings.HasSuffix(arg, "'") {
+				sArgs[i] = sArgs[i] + "'"
+			}
 		}
 
-		if !strings.HasSuffix(arg, "'") {
-			sArgs[i] = sArgs[i] + "'"
-		}
+		params = fmt.Sprintf("%s, %s", params, strings.Join(sArgs, ", "))
 	}
-
-	params := fmt.Sprintf(
-		"'/install', '/quiet', '/norestart', 'CID=%s', %s",
-		cid,
-		strings.Join(sArgs, ", "),
-	)
 
 	return strings.ReplaceAll(params, "\"", "\\\"")
 }
