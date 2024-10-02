@@ -154,12 +154,6 @@ var createCmd = &cobra.Command{
 
 		targetSensors := []sensor.Sensor{
 			{
-				Filter:       "os:'*RHEL*'+os_version:'6'+platform:'linux'",
-				OsShortName:  "rhel",
-				OsVersion:    "6*",
-				BucketPrefix: fmt.Sprintf("crowdstrike/falcon/%s/linux/rhel/6", ac.Cloud.String()),
-			},
-			{
 				Filter:       "os:'*RHEL*'+os_version:'7'+platform:'linux'",
 				OsShortName:  "rhel",
 				OsVersion:    "7*",
@@ -178,15 +172,6 @@ var createCmd = &cobra.Command{
 				BucketPrefix: fmt.Sprintf("crowdstrike/falcon/%s/linux/rhel/9", ac.Cloud.String()),
 			},
 			{
-				Filter:      "os:'*CentOS*'+os_version:'6'+platform:'linux'",
-				OsShortName: "centos",
-				OsVersion:   "6*",
-				BucketPrefix: fmt.Sprintf(
-					"crowdstrike/falcon/%s/linux/centos/6",
-					ac.Cloud.String(),
-				),
-			},
-			{
 				Filter:      "os:'*CentOS*'+os_version:'7'+platform:'linux'",
 				OsShortName: "centos",
 				OsVersion:   "7*",
@@ -201,15 +186,6 @@ var createCmd = &cobra.Command{
 				OsVersion:   "8*",
 				BucketPrefix: fmt.Sprintf(
 					"crowdstrike/falcon/%s/linux/centos/8",
-					ac.Cloud.String(),
-				),
-			},
-			{
-				Filter:      "os:'*SLES*'+os_version:'11'+platform:'linux'",
-				OsShortName: "sles",
-				OsVersion:   "11*",
-				BucketPrefix: fmt.Sprintf(
-					"crowdstrike/falcon/%s/linux/sles/11",
 					ac.Cloud.String(),
 				),
 			},

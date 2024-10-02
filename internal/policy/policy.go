@@ -33,16 +33,13 @@ type Policy struct {
 	Cid                  string
 	LinuxInstallParams   string
 	WindowsInstallParams string
-	Sles11               osResource
 	Sles12               osResource
 	Sles15               osResource
-	Rhel6                osResource
 	Rhel7                osResource
 	Rhel8                osResource
 	Rhel9                osResource
 	Debian               osResource
 	Ubuntu               osResource
-	Centos6              osResource
 	Centos7              osResource
 	Centos8              osResource
 	Windows              osResource
@@ -65,16 +62,13 @@ func NewPolicy(
 	policy.WindowsInstallParams = formatWinArgs(cid, windowsInstallParams)
 
 	osVersionToField := map[string]*osResource{
-		"sles11*":  &policy.Sles11,
 		"sles12*":  &policy.Sles12,
 		"sles15*":  &policy.Sles15,
-		"rhel6*":   &policy.Rhel6,
 		"rhel7*":   &policy.Rhel7,
 		"rhel8*":   &policy.Rhel8,
 		"rhel9*":   &policy.Rhel9,
 		"debian":   &policy.Debian,
 		"ubuntu":   &policy.Ubuntu,
-		"centos6*": &policy.Centos6,
 		"centos7*": &policy.Centos7,
 		"centos8*": &policy.Centos8,
 		"windows":  &policy.Windows,
