@@ -122,10 +122,11 @@ var createCmd = &cobra.Command{
 		}
 
 		ac := falcon.ApiConfig{
-			ClientId:     falconClientId,
-			ClientSecret: falconClientSecret,
-			Cloud:        cloud,
-			Context:      context.Background(),
+			ClientId:          falconClientId,
+			ClientSecret:      falconClientSecret,
+			Cloud:             cloud,
+			Context:           context.Background(),
+			UserAgentOverride: "crowdstrike-gcp-vm-manager-os-policy/v0.0.2",
 		}
 
 		client, err := falcon.NewClient(&ac)
