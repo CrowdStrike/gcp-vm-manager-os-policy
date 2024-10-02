@@ -17,14 +17,11 @@ The CrowdStrike OS Policy currently supports the following operating systems:
 
 | Operating System                                         | Architecture  |
 | -------------------------------------------------------- | ------------- |
-| Red Hat Enterprise Linux 6                               | x86_64        |
 | Red Hat Enterprise Linux 7                               | x86_64        |
 | Red Hat Enterprise Linux 8                               | x86_64        |
 | Red Hat Enterprise Linux 9                               | x86_64        |
-| CentOS 6                                                 | x86_64        |
 | CentOS 7                                                 | x86_64        |
 | CentOS 8                                                 | x86_64        |
-| SUSE Linux Enterprise Server 11                          | x86_64        |
 | SUSE Linux Enterprise Server 12                          | x86_64        |
 | SUSE Linux Enterprise Server 15                          | x86_64        |
 | Ubuntu 16.04                                             | x86_64        |
