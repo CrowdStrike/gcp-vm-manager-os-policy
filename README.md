@@ -84,13 +84,17 @@ OS Policy is a feature of GCP VM Manager. In order to use OS Policies to deploy 
     ```bash
     gcloud config set project cs-policy
     ``` 
-3. OPTIONAL: Export the CrowdStrike API keys as environment variables. Alternatively you can provide the keys as command line arguments.
+3. OPTIONAL: Export the CrowdStrike API keys as environment variables. Alternatively you can provide the keys as command line arguments. See `cs-policy create --help` for more information.
 
     ```bash
     export FALCON_CLIENT_ID=********
     export FALCON_CLIENT_SECRET=********
     export FALCON_CLOUD=********
     ```
+    
+> [!IMPORTANT]
+> `FALCON_CLOUD` supports the following values `autodiscover`, `us-1`, `us-2`, `eu-1`, `us-gov-1`. If not provided, the tool will default to `autodiscover`.
+
 4. Run the tool.
 
     ```bash
