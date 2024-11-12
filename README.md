@@ -65,7 +65,16 @@ OS Policy is a feature of GCP VM Manager. In order to use OS Policies to deploy 
     </p>
     </details>
 
-> Note: This page is only shown once. Make sure you copy **CLIENT ID**, **SECRET**, and **BASE URL** to a secure location.
+> [!IMPORTANT]
+> This page is only shown once. Make sure you copy **CLIENT ID**, **SECRET**, and **BASE URL** to a secure location.
+
+4. Use `BASE_URL` to infer the `FALCON_CLOUD` value. 
+    | BASE URL            | FALCON_CLOUD |
+    | ------------------- | ------------ |
+    | `https://api.crowdstrike.com` | `us-1`       |
+    | `https://api.us-2.crowdstrike.com` | `us-2`       |
+    | `https://api.eu-1.crowdstrike.com` | `eu-1`       |
+    | `https://api.laggar.gcw.crowdstrike.com` | `us-gov-1`   |
 
 ## Installation
 
