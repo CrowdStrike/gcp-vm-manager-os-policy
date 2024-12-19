@@ -31,6 +31,7 @@ The CrowdStrike OS Policy currently supports the following operating systems:
 | Debian 9                                                 | x86_64        |
 | Debian 10                                                | x86_64        |
 | Debian 11                                                | x86_64        |
+| Debian 12                                                | x86_64        |
 | All Windows Versions supported by the CrowdStrike Sensor | x86_64        |
 
 > Note: For supported Windows versions, check the CrowdStrike documentation.
