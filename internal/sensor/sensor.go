@@ -57,7 +57,7 @@ func (s *Sensor) StreamToBucket(
 	}
 
 	if len(query.Payload.Resources) == 0 {
-		return errors.New(fmt.Sprintf("no sensors found matching filter: %s", s.Filter))
+		return fmt.Errorf("no sensors found matching filter: %s", s.Filter)
 	}
 
 	sensorResource := query.Payload.Resources[0]
@@ -99,6 +99,9 @@ func (s *Sensor) StreamToBucket(
 	}
 
 	attrs, err = o.Attrs(ctx)
+	if err != nil {
+		return err
+	}
 
 	s.FullPath = fmt.Sprintf("%s/%s", attrs.Bucket, attrs.Name)
 	s.Generation = attrs.Generation

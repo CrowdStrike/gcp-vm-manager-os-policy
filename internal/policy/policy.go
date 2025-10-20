@@ -8,6 +8,7 @@ import (
 	"fmt"
 	"io"
 	"os/exec"
+	"runtime"
 	"strings"
 	"sync"
 	"text/template"
@@ -119,12 +120,24 @@ func NewPolicy(
 }
 
 func (p Policy) GeneratePolicy(wr io.Writer) error {
-	t, err := template.New("policy").Parse(policyTemplate)
+	funcMap := template.FuncMap{
+		"escapeJSON": escapeJSON,
+	}
+
+	t, err := template.New("policy").Funcs(funcMap).Parse(policyTemplate)
 	if err != nil {
 		return err
 	}
 
 	return t.Execute(wr, p)
+}
+
+// escapeJSON escapes backslashes for JSON strings only on Windows
+func escapeJSON(s string) string {
+	if runtime.GOOS == "windows" {
+		return strings.ReplaceAll(s, `\`, `\\`)
+	}
+	return s
 }
 
 type Assignment struct {
@@ -137,7 +150,7 @@ type Assignment struct {
 	failed bool
 }
 
-// Failed returns true if assingment exited with an error
+// Failed returns true if assignment exited with an error
 //
 // Can be used with Done() to determine if the command completed without error
 func (a *Assignment) Failed() bool {

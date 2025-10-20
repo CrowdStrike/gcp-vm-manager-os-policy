@@ -18,7 +18,7 @@
                 "file": {
                   "gcs": {
                     "bucket": "{{ .Sles12.Bucket }}",
-                    "object": "{{ .Sles12.Object }}",
+                    "object": "{{ escapeJSON .Sles12.Object }}",
                     "generation": "{{ .Sles12.Generation }}"
                   }
                 },
@@ -69,7 +69,7 @@
                 "file": {
                   "gcs": {
                     "bucket": "{{ .Sles15.Bucket }}",
-                    "object": "{{ .Sles15.Object }}",
+                    "object": "{{ escapeJSON .Sles15.Object }}",
                     "generation": "{{ .Sles15.Generation }}"
                   }
                 },
@@ -122,7 +122,7 @@
                   "source": {
                     "gcs": {
                       "bucket": "{{ .Rhel7.Bucket }}",
-                      "object": "{{ .Rhel7.Object }}",
+                      "object": "{{ escapeJSON .Rhel7.Object }}",
                       "generation": "{{ .Rhel7.Generation }}"
                     }
                   },
@@ -161,7 +161,7 @@
                   "source": {
                     "gcs": {
                       "bucket": "{{ .Rhel8.Bucket }}",
-                      "object": "{{ .Rhel8.Object }}",
+                      "object": "{{ escapeJSON .Rhel8.Object }}",
                       "generation": "{{ .Rhel8.Generation }}"
                     }
                   },
@@ -200,7 +200,7 @@
                   "source": {
                     "gcs": {
                       "bucket": "{{ .Rhel9.Bucket }}",
-                      "object": "{{ .Rhel9.Object }}",
+                      "object": "{{ escapeJSON .Rhel9.Object }}",
                       "generation": "{{ .Rhel9.Generation }}"
                     }
                   },
@@ -238,7 +238,7 @@
                   "source": {
                     "gcs": {
                       "bucket": "{{ .Debian.Bucket }}",
-                      "object": "{{ .Debian.Object }}",
+                      "object": "{{ escapeJSON .Debian.Object }}",
                       "generation": "{{ .Debian.Generation }}"
                     }
                   },
@@ -276,7 +276,7 @@
                   "source": {
                     "gcs": {
                       "bucket": "{{ .Ubuntu.Bucket }}",
-                      "object": "{{ .Ubuntu.Object }}",
+                      "object": "{{ escapeJSON .Ubuntu.Object }}",
                       "generation": "{{ .Ubuntu.Generation }}"
                     }
                   },
@@ -315,7 +315,7 @@
                   "source": {
                     "gcs": {
                       "bucket": "{{ .Centos7.Bucket }}",
-                      "object": "{{ .Centos7.Object }}",
+                      "object": "{{ escapeJSON .Centos7.Object }}",
                       "generation": "{{ .Centos7.Generation }}"
                     }
                   },
@@ -354,7 +354,7 @@
                   "source": {
                     "gcs": {
                       "bucket": "{{ .Centos8.Bucket }}",
-                      "object": "{{ .Centos8.Object }}",
+                      "object": "{{ escapeJSON .Centos8.Object }}",
                       "generation": "{{ .Centos8.Generation }}"
                     }
                   },
@@ -390,7 +390,7 @@
                 "file": {
                   "gcs": {
                     "bucket": "{{ .Windows.Bucket }}",
-                    "object": "{{ .Windows.Object }}",
+                    "object": "{{ escapeJSON .Windows.Object }}",
                     "generation": "{{ .Windows.Generation }}"
                   }
                 },
