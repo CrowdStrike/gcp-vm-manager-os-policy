@@ -2,7 +2,6 @@ package falconutil
 
 import (
 	"context"
-	"errors"
 	"fmt"
 
 	"github.com/crowdstrike/gofalcon/falcon/client"
@@ -21,9 +20,7 @@ func CID(client *client.CrowdStrikeAPISpecification) (string, error) {
 	}
 
 	if len(resp.Payload.Resources) == 0 {
-		return "", errors.New(
-			fmt.Sprintf("Unexpected payload response. No resources found: %v", resp.Payload),
-		)
+		return "", fmt.Errorf("unexpected payload response. No resources found: %v", resp.Payload)
 	}
 
 	return resp.Payload.Resources[0], nil

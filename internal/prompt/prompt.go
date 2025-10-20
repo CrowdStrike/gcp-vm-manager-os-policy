@@ -1,7 +1,6 @@
 package prompt
 
 import (
-	"errors"
 	"fmt"
 
 	"github.com/charmbracelet/huh"
@@ -11,7 +10,7 @@ import (
 func validateParam(param string) func(string) error {
 	return func(str string) error {
 		if str == "" {
-			return errors.New(fmt.Sprintf("a value is required for %s", param))
+			return fmt.Errorf("a value is required for %s", param)
 		}
 		return nil
 	}

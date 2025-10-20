@@ -1,6 +1,6 @@
 # cs-policy
 
-A helper tool for deploying CrowdStrike OS Poilcies to GCP Zones. This tool automates many of the manual steps required to create & deploy OS Policies to GCP VMs.
+A helper tool for deploying CrowdStrike OS Policies to GCP Zones. This tool automates many of the manual steps required to create & deploy OS Policies to GCP VMs.
 
 The tool does the following:
 

@@ -54,8 +54,5 @@ func (pw *ProgressWriter) SetTotal(total int64) {
 func (pw *ProgressWriter) Done() bool {
 	pw.lock.RLock()
 	defer pw.lock.RUnlock()
-	if pw.total == pw.n {
-		return true
-	}
-	return false
+	return pw.total == pw.n
 }

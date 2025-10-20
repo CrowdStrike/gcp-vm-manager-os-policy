@@ -36,7 +36,7 @@ var skipWait bool
 var inclusionLabels []string
 var exclusionLabels []string
 
-// createCmd represents the base cs-policy create when called without any ubcommands
+// createCmd represents the base cs-policy create when called without any subcommands
 var createCmd = &cobra.Command{
 	Use:   "create [flags]",
 	Short: "Create GCP OS Policy Assignments for Falcon Sensor deployment",
@@ -49,7 +49,7 @@ var createCmd = &cobra.Command{
     - Create OS Policy Assignments in the targeted zones`,
 	Example: heredoc.Doc(`
     Target all VMs in the us-central1-a and us-central-b zones
-    $ cs-policy create --zones=us-central1-a,us-central-b --buckt=my-bucket
+    $ cs-policy create --zones=us-central1-a,us-central-b --bucket=my-bucket
 
     Target all VMs in the us-central1-a zone with custom install parameters
     $ cs-policy create --bucket example-bucket --zone us-central1-a --linux-install-params='--tags="Washington/DC_USA,Production" --aph=proxy.example.com --app=8080' --windows-install-params='GROUPING_TAGS="Washington/DC_USA,Production" APP_PROXYNAME=proxy.example.com APP_PROXYPORT=8080'
@@ -65,7 +65,7 @@ var createCmd = &cobra.Command{
 			falconCloud, err = prompt.PromptCloud()
 			if err != nil {
 				if errors.Is(huh.ErrUserAborted, err) {
-					fmt.Println("User aborted, gracefully quiting...")
+					fmt.Println("User aborted, gracefully exiting...")
 					return
 				}
 				fmt.Println(err)
@@ -89,7 +89,7 @@ var createCmd = &cobra.Command{
 			falconClientId, err = prompt.PromptClientId()
 			if err != nil {
 				if errors.Is(huh.ErrUserAborted, err) {
-					fmt.Println("User aborted, gracefully quiting...")
+					fmt.Println("User aborted, gracefully exiting...")
 					return
 				}
 				fmt.Println(err)
@@ -101,7 +101,7 @@ var createCmd = &cobra.Command{
 			falconClientSecret, err = prompt.PromptClientSecret()
 			if err != nil {
 				if errors.Is(huh.ErrUserAborted, err) {
-					fmt.Println("User aborted, gracefully quiting...")
+					fmt.Println("User aborted, gracefully exiting...")
 					return
 				}
 				fmt.Println(err)
@@ -113,7 +113,7 @@ var createCmd = &cobra.Command{
 			storageBucket, err = prompt.PromptOutputBucket()
 			if err != nil {
 				if errors.Is(huh.ErrUserAborted, err) {
-					fmt.Println("User aborted, gracefully quiting...")
+					fmt.Println("User aborted, gracefully exiting...")
 					return
 				}
 				fmt.Println(err)
@@ -322,21 +322,21 @@ var createCmd = &cobra.Command{
 			return
 		}
 
-		fmt.Printf("GCP OS Policy template succesfully generated (%s)\n\n", policyFilePath)
+		fmt.Printf("GCP OS Policy template successfully generated (%s)\n\n", policyFilePath)
 
 		err = processZones(policyFilePath)
 
 		if err != nil {
 			fmt.Println(
 				errorsutil.DefaultError(
-					fmt.Sprint("An error occurred while creating a GCP OS Policy Assignment"),
+					"An error occurred while creating a GCP OS Policy Assignment",
 					err,
 				),
 			)
 			return
 		}
 
-		fmt.Println("Policy Assignments created succesfully.")
+		fmt.Println("Policy Assignments created successfully.")
 	},
 }
 
@@ -411,9 +411,9 @@ func init() {
 	createCmd.Flags().
 		BoolVar(&skipWait, "skip-wait", false, "Skip waiting for the rollout of GCP OS Policy Assignments to complete")
 	// rootCmd.Flags().
-	// 	StringArrayVar(&inclusionLabels, "include-labelset", []string{}, "A comma seperated list of labels. In the format of labelName:labelValue. Matches only if a VM has all the labels in the labelset. Example: Label:Value,Env:Prod")
+	// 	StringArrayVar(&inclusionLabels, "include-labelset", []string{}, "A comma separated list of labels. In the format of labelName:labelValue. Matches only if a VM has all the labels in the labelset. Example: Label:Value,Env:Prod")
 	// rootCmd.Flags().
-	// 	StringArrayVar(&exclusionLabels, "exclude-labelset", []string{}, "A comma seperated list of labels. In the format of labelName:labelValue. Matches only if a VM has none of the labels in the labelset. Example: Label:Value,Env:Prod")
+	// 	StringArrayVar(&exclusionLabels, "exclude-labelset", []string{}, "A comma separated list of labels. In the format of labelName:labelValue. Matches only if a VM has none of the labels in the labelset. Example: Label:Value,Env:Prod")
 	createCmd.MarkFlagRequired("zones")
 
 	if falconClientId == "" {

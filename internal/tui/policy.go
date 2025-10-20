@@ -88,12 +88,12 @@ func (m PolicyModel) View() string {
 	}
 
 	// if m.completed != len(m.Assignments) && !m.Assignments[0].SkipWait {
-  prefix := Yellow(fmt.Sprintf("%s", WarningIcon))
-  notice := fmt.Sprintf(
-    "\n\n%s This may take a while depending on your rollout settings and number of instances. You can use --skip-wait to create the assignments without waiting for the rollout to complete.",
-    prefix,
-  )
-  s.WriteString(DefaultStyle.Width(m.width).PaddingLeft(2).Render(notice))
+	prefix := Yellow(WarningIcon)
+	notice := fmt.Sprintf(
+		"\n\n%s This may take a while depending on your rollout settings and number of instances. You can use --skip-wait to create the assignments without waiting for the rollout to complete.",
+		prefix,
+	)
+	s.WriteString(DefaultStyle.Width(m.width).PaddingLeft(2).Render(notice))
 	// }
 
 	s.WriteString("\n\n")
