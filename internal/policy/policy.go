@@ -41,7 +41,6 @@ type Policy struct {
 	Rhel9                osResource
 	Debian               osResource
 	Ubuntu               osResource
-	Centos7              osResource
 	Centos8              osResource
 	Windows              osResource
 	ExclusionLabelSets   []LabelSet
@@ -70,7 +69,6 @@ func NewPolicy(
 		"rhel9*":   &policy.Rhel9,
 		"debian":   &policy.Debian,
 		"ubuntu":   &policy.Ubuntu,
-		"centos7*": &policy.Centos7,
 		"centos8*": &policy.Centos8,
 		"windows":  &policy.Windows,
 	}

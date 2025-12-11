@@ -173,15 +173,6 @@ var createCmd = &cobra.Command{
 				BucketPrefix: fmt.Sprintf("crowdstrike/falcon/%s/linux/rhel/9", ac.Cloud.String()),
 			},
 			{
-				Filter:      "os:'*CentOS*'+os_version:'7'+platform:'linux'",
-				OsShortName: "centos",
-				OsVersion:   "7*",
-				BucketPrefix: fmt.Sprintf(
-					"crowdstrike/falcon/%s/linux/centos/7",
-					ac.Cloud.String(),
-				),
-			},
-			{
 				Filter:      "os:'*CentOS*'+os_version:'8'+platform:'linux'",
 				OsShortName: "centos",
 				OsVersion:   "8*",

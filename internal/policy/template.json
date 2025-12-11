@@ -303,45 +303,6 @@
           "inventoryFilters": [
             {
               "osShortName": "centos",
-              "osVersion": "7*"
-            }
-          ],
-          "resources": [
-            {
-              "id": "centos7-install",
-              "pkg": {
-                "desiredState": "INSTALLED",
-                "rpm": {
-                  "source": {
-                    "gcs": {
-                      "bucket": "{{ .Centos7.Bucket }}",
-                      "object": "{{ escapeJSON .Centos7.Object }}",
-                      "generation": "{{ .Centos7.Generation }}"
-                    }
-                  },
-                  "pullDeps": true
-                }
-              }
-            },
-            {
-              "id": "centos7-configure",
-              "exec": {
-                "validate": {
-                  "script": "if pgrep  -u root falcon-sensor >/dev/null 2>&1 ; then\n  echo \"Falcon Sensor already installed... if you want to update or downgrade, please use Sensor Update Policies in the CrowdStrike console. Please see: https://falcon.crowdstrike.com/documentation/66/sensor-update-policies for more information.\"\n  exit 100\nfi\nexit 101\n",
-                  "interpreter": "SHELL"
-                },
-                "enforce": {
-                  "script": "/opt/CrowdStrike/falconctl -sf {{ .LinuxInstallParams }}\nif [[ -L \"/sbin/init\" ]]\nthen\n    systemctl start falcon-sensor\nelse\n    sudo service falcon-sensor start\nfi\nif pgrep  -u root falcon-sensor >/dev/null 2>&1 ; then\n  exit 100\nfi\nexit 101\n",
-                  "interpreter": "SHELL"
-                }
-              }
-            }
-          ]
-        },
-        {
-          "inventoryFilters": [
-            {
-              "osShortName": "centos",
               "osVersion": "8*"
             }
           ],
