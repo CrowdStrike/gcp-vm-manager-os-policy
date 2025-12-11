@@ -6,9 +6,12 @@ import (
 	"fmt"
 	"io"
 	"path/filepath"
+	"strings"
 
 	"cloud.google.com/go/storage"
 	"github.com/crowdstrike/gcp-os-policy/internal/progress"
+	"github.com/crowdstrike/gcp-os-policy/internal/versionutil"
+	"github.com/crowdstrike/gofalcon/falcon"
 	"github.com/crowdstrike/gofalcon/falcon/client"
 	"github.com/crowdstrike/gofalcon/falcon/client/sensor_download"
 	"github.com/crowdstrike/gofalcon/falcon/models"
@@ -19,6 +22,8 @@ type Sensor struct {
 	OsVersion      string
 	Filter         string
 	BucketPrefix   string
+	Platform       string
+	Cloud          falcon.CloudType
 	FullPath       string
 	ProgressWriter *progress.ProgressWriter
 	SensorInfo     models.DomainSensorInstallerV1
@@ -64,8 +69,10 @@ func (s *Sensor) StreamToBucket(
 	s.ProgressWriter = progress.NewProgressWriter()
 	s.SensorInfo = *sensorResource
 
+	bucketPath := s.determineBucketPath(sensorResource)
+
 	o := storageClient.Bucket(bucket).
-		Object(filepath.Join(s.BucketPrefix, *sensorResource.Version, *sensorResource.Name))
+		Object(filepath.Join(bucketPath, *sensorResource.Version, *sensorResource.Name))
 
 	// check if a sensor already exists in the bucket
 	attrs, err := o.Attrs(ctx)
@@ -107,4 +114,21 @@ func (s *Sensor) StreamToBucket(
 	s.Generation = attrs.Generation
 
 	return nil
+}
+
+func (s *Sensor) determineBucketPath(sensorResource *models.DomainSensorInstallerV1) string {
+	version := *sensorResource.Version
+
+	if versionutil.ShouldUseCloudAgnosticPath(version, s.Platform, s.Cloud) {
+		parts := strings.Split(s.BucketPrefix, "/")
+		var result []string
+		for _, part := range parts {
+			if part != s.Cloud.String() {
+				result = append(result, part)
+			}
+		}
+		return strings.Join(result, "/")
+	}
+
+	return s.BucketPrefix
 }
