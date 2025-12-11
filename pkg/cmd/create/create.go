@@ -182,6 +182,24 @@ var createCmd = &cobra.Command{
 				),
 			},
 			{
+				Filter:      "os:'*CentOS Stream*'+os_version:'9'+platform:'linux'",
+				OsShortName: "centosstream",
+				OsVersion:   "9*",
+				BucketPrefix: fmt.Sprintf(
+					"crowdstrike/falcon/%s/linux/centos/stream/9",
+					ac.Cloud.String(),
+				),
+			},
+			{
+				Filter:      "os:'*CentOS Stream*'+os_version:'10'+platform:'linux'",
+				OsShortName: "centosstream",
+				OsVersion:   "10*",
+				BucketPrefix: fmt.Sprintf(
+					"crowdstrike/falcon/%s/linux/centos/stream/10",
+					ac.Cloud.String(),
+				),
+			},
+			{
 				Filter:      "os:'*SLES*'+os_version:'12'+platform:'linux'",
 				OsShortName: "sles",
 				OsVersion:   "12*",

@@ -42,6 +42,8 @@ type Policy struct {
 	Debian               osResource
 	Ubuntu               osResource
 	Centos8              osResource
+	CentosStream9        osResource
+	CentosStream10       osResource
 	Windows              osResource
 	ExclusionLabelSets   []LabelSet
 	InclusionLabelSets   []LabelSet
@@ -62,15 +64,17 @@ func NewPolicy(
 	policy.WindowsInstallParams = formatWinArgs(cid, windowsInstallParams)
 
 	osVersionToField := map[string]*osResource{
-		"sles12*":  &policy.Sles12,
-		"sles15*":  &policy.Sles15,
-		"rhel7*":   &policy.Rhel7,
-		"rhel8*":   &policy.Rhel8,
-		"rhel9*":   &policy.Rhel9,
-		"debian":   &policy.Debian,
-		"ubuntu":   &policy.Ubuntu,
-		"centos8*": &policy.Centos8,
-		"windows":  &policy.Windows,
+		"sles12*":         &policy.Sles12,
+		"sles15*":         &policy.Sles15,
+		"rhel7*":          &policy.Rhel7,
+		"rhel8*":          &policy.Rhel8,
+		"rhel9*":          &policy.Rhel9,
+		"debian":          &policy.Debian,
+		"ubuntu":          &policy.Ubuntu,
+		"centos8*":        &policy.Centos8,
+		"centosstream9*":  &policy.CentosStream9,
+		"centosstream10*": &policy.CentosStream10,
+		"windows":         &policy.Windows,
 	}
 
 	for _, s := range sensors {

@@ -341,6 +341,84 @@
         {
           "inventoryFilters": [
             {
+              "osShortName": "centosstream",
+              "osVersion": "9*"
+            }
+          ],
+          "resources": [
+            {
+              "id": "centosstream9-install",
+              "pkg": {
+                "desiredState": "INSTALLED",
+                "rpm": {
+                  "source": {
+                    "gcs": {
+                      "bucket": "{{ .CentosStream9.Bucket }}",
+                      "object": "{{ escapeJSON .CentosStream9.Object }}",
+                      "generation": "{{ .CentosStream9.Generation }}"
+                    }
+                  },
+                  "pullDeps": true
+                }
+              }
+            },
+            {
+              "id": "centosstream9-configure",
+              "exec": {
+                "validate": {
+                  "script": "if pgrep  -u root falcon-sensor >/dev/null 2>&1 ; then\n  echo \"Falcon Sensor already installed... if you want to update or downgrade, please use Sensor Update Policies in the CrowdStrike console. Please see: https://falcon.crowdstrike.com/documentation/66/sensor-update-policies for more information.\"\n  exit 100\nfi\nexit 101\n",
+                  "interpreter": "SHELL"
+                },
+                "enforce": {
+                  "script": "/opt/CrowdStrike/falconctl -sf {{ .LinuxInstallParams }}\nif [[ -L \"/sbin/init\" ]]\nthen\n    systemctl start falcon-sensor\nelse\n    sudo service falcon-sensor start\nfi\nif pgrep  -u root falcon-sensor >/dev/null 2>&1 ; then\n  exit 100\nfi\nexit 101\n",
+                  "interpreter": "SHELL"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "inventoryFilters": [
+            {
+              "osShortName": "centosstream",
+              "osVersion": "10*"
+            }
+          ],
+          "resources": [
+            {
+              "id": "centosstream10-install",
+              "pkg": {
+                "desiredState": "INSTALLED",
+                "rpm": {
+                  "source": {
+                    "gcs": {
+                      "bucket": "{{ .CentosStream10.Bucket }}",
+                      "object": "{{ escapeJSON .CentosStream10.Object }}",
+                      "generation": "{{ .CentosStream10.Generation }}"
+                    }
+                  },
+                  "pullDeps": true
+                }
+              }
+            },
+            {
+              "id": "centosstream10-configure",
+              "exec": {
+                "validate": {
+                  "script": "if pgrep  -u root falcon-sensor >/dev/null 2>&1 ; then\n  echo \"Falcon Sensor already installed... if you want to update or downgrade, please use Sensor Update Policies in the CrowdStrike console. Please see: https://falcon.crowdstrike.com/documentation/66/sensor-update-policies for more information.\"\n  exit 100\nfi\nexit 101\n",
+                  "interpreter": "SHELL"
+                },
+                "enforce": {
+                  "script": "/opt/CrowdStrike/falconctl -sf {{ .LinuxInstallParams }}\nif [[ -L \"/sbin/init\" ]]\nthen\n    systemctl start falcon-sensor\nelse\n    sudo service falcon-sensor start\nfi\nif pgrep  -u root falcon-sensor >/dev/null 2>&1 ; then\n  exit 100\nfi\nexit 101\n",
+                  "interpreter": "SHELL"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "inventoryFilters": [
+            {
               "osShortName": "windows"
             }
           ],
