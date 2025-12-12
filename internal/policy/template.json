@@ -226,6 +226,45 @@
         {
           "inventoryFilters": [
             {
+              "osShortName": "rhel",
+              "osVersion": "10*"
+            }
+          ],
+          "resources": [
+            {
+              "id": "rhel10-install",
+              "pkg": {
+                "desiredState": "INSTALLED",
+                "rpm": {
+                  "source": {
+                    "gcs": {
+                      "bucket": "{{ .Rhel10.Bucket }}",
+                      "object": "{{ escapeJSON .Rhel10.Object }}",
+                      "generation": "{{ .Rhel10.Generation }}"
+                    }
+                  },
+                  "pullDeps": true
+                }
+              }
+            },
+            {
+              "id": "rhel10-configure",
+              "exec": {
+                "validate": {
+                  "script": "if pgrep  -u root falcon-sensor >/dev/null 2>&1 ; then\n  echo \"Falcon Sensor already installed... if you want to update or downgrade, please use Sensor Update Policies in the CrowdStrike console. Please see: https://falcon.crowdstrike.com/documentation/66/sensor-update-policies for more information.\"\n  exit 100\nfi\nexit 101\n",
+                  "interpreter": "SHELL"
+                },
+                "enforce": {
+                  "script": "/opt/CrowdStrike/falconctl -sf {{ .LinuxInstallParams }}\nif [[ -L \"/sbin/init\" ]]\nthen\n    systemctl start falcon-sensor\nelse\n    sudo service falcon-sensor start\nfi\nif pgrep  -u root falcon-sensor >/dev/null 2>&1 ; then\n  exit 100\nfi\nexit 101\n",
+                  "interpreter": "SHELL"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "inventoryFilters": [
+            {
               "osShortName": "debian"
             }
           ],
@@ -303,45 +342,6 @@
           "inventoryFilters": [
             {
               "osShortName": "centos",
-              "osVersion": "7*"
-            }
-          ],
-          "resources": [
-            {
-              "id": "centos7-install",
-              "pkg": {
-                "desiredState": "INSTALLED",
-                "rpm": {
-                  "source": {
-                    "gcs": {
-                      "bucket": "{{ .Centos7.Bucket }}",
-                      "object": "{{ escapeJSON .Centos7.Object }}",
-                      "generation": "{{ .Centos7.Generation }}"
-                    }
-                  },
-                  "pullDeps": true
-                }
-              }
-            },
-            {
-              "id": "centos7-configure",
-              "exec": {
-                "validate": {
-                  "script": "if pgrep  -u root falcon-sensor >/dev/null 2>&1 ; then\n  echo \"Falcon Sensor already installed... if you want to update or downgrade, please use Sensor Update Policies in the CrowdStrike console. Please see: https://falcon.crowdstrike.com/documentation/66/sensor-update-policies for more information.\"\n  exit 100\nfi\nexit 101\n",
-                  "interpreter": "SHELL"
-                },
-                "enforce": {
-                  "script": "/opt/CrowdStrike/falconctl -sf {{ .LinuxInstallParams }}\nif [[ -L \"/sbin/init\" ]]\nthen\n    systemctl start falcon-sensor\nelse\n    sudo service falcon-sensor start\nfi\nif pgrep  -u root falcon-sensor >/dev/null 2>&1 ; then\n  exit 100\nfi\nexit 101\n",
-                  "interpreter": "SHELL"
-                }
-              }
-            }
-          ]
-        },
-        {
-          "inventoryFilters": [
-            {
-              "osShortName": "centos",
               "osVersion": "8*"
             }
           ],
@@ -364,6 +364,240 @@
             },
             {
               "id": "centos8-configure",
+              "exec": {
+                "validate": {
+                  "script": "if pgrep  -u root falcon-sensor >/dev/null 2>&1 ; then\n  echo \"Falcon Sensor already installed... if you want to update or downgrade, please use Sensor Update Policies in the CrowdStrike console. Please see: https://falcon.crowdstrike.com/documentation/66/sensor-update-policies for more information.\"\n  exit 100\nfi\nexit 101\n",
+                  "interpreter": "SHELL"
+                },
+                "enforce": {
+                  "script": "/opt/CrowdStrike/falconctl -sf {{ .LinuxInstallParams }}\nif [[ -L \"/sbin/init\" ]]\nthen\n    systemctl start falcon-sensor\nelse\n    sudo service falcon-sensor start\nfi\nif pgrep  -u root falcon-sensor >/dev/null 2>&1 ; then\n  exit 100\nfi\nexit 101\n",
+                  "interpreter": "SHELL"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "inventoryFilters": [
+            {
+              "osShortName": "centos",
+              "osVersion": "9*"
+            }
+          ],
+          "resources": [
+            {
+              "id": "centos9-install",
+              "pkg": {
+                "desiredState": "INSTALLED",
+                "rpm": {
+                  "source": {
+                    "gcs": {
+                      "bucket": "{{ .Centos9.Bucket }}",
+                      "object": "{{ escapeJSON .Centos9.Object }}",
+                      "generation": "{{ .Centos9.Generation }}"
+                    }
+                  },
+                  "pullDeps": true
+                }
+              }
+            },
+            {
+              "id": "centos9-configure",
+              "exec": {
+                "validate": {
+                  "script": "if pgrep  -u root falcon-sensor >/dev/null 2>&1 ; then\n  echo \"Falcon Sensor already installed... if you want to update or downgrade, please use Sensor Update Policies in the CrowdStrike console. Please see: https://falcon.crowdstrike.com/documentation/66/sensor-update-policies for more information.\"\n  exit 100\nfi\nexit 101\n",
+                  "interpreter": "SHELL"
+                },
+                "enforce": {
+                  "script": "/opt/CrowdStrike/falconctl -sf {{ .LinuxInstallParams }}\nif [[ -L \"/sbin/init\" ]]\nthen\n    systemctl start falcon-sensor\nelse\n    sudo service falcon-sensor start\nfi\nif pgrep  -u root falcon-sensor >/dev/null 2>&1 ; then\n  exit 100\nfi\nexit 101\n",
+                  "interpreter": "SHELL"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "inventoryFilters": [
+            {
+              "osShortName": "centos",
+              "osVersion": "10*"
+            }
+          ],
+          "resources": [
+            {
+              "id": "centos10-install",
+              "pkg": {
+                "desiredState": "INSTALLED",
+                "rpm": {
+                  "source": {
+                    "gcs": {
+                      "bucket": "{{ .Centos10.Bucket }}",
+                      "object": "{{ escapeJSON .Centos10.Object }}",
+                      "generation": "{{ .Centos10.Generation }}"
+                    }
+                  },
+                  "pullDeps": true
+                }
+              }
+            },
+            {
+              "id": "centos10-configure",
+              "exec": {
+                "validate": {
+                  "script": "if pgrep  -u root falcon-sensor >/dev/null 2>&1 ; then\n  echo \"Falcon Sensor already installed... if you want to update or downgrade, please use Sensor Update Policies in the CrowdStrike console. Please see: https://falcon.crowdstrike.com/documentation/66/sensor-update-policies for more information.\"\n  exit 100\nfi\nexit 101\n",
+                  "interpreter": "SHELL"
+                },
+                "enforce": {
+                  "script": "/opt/CrowdStrike/falconctl -sf {{ .LinuxInstallParams }}\nif [[ -L \"/sbin/init\" ]]\nthen\n    systemctl start falcon-sensor\nelse\n    sudo service falcon-sensor start\nfi\nif pgrep  -u root falcon-sensor >/dev/null 2>&1 ; then\n  exit 100\nfi\nexit 101\n",
+                  "interpreter": "SHELL"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "inventoryFilters": [
+            {
+              "osShortName": "ol",
+              "osVersion": "7*"
+            }
+          ],
+          "resources": [
+            {
+              "id": "oracle7-install",
+              "pkg": {
+                "desiredState": "INSTALLED",
+                "rpm": {
+                  "source": {
+                    "gcs": {
+                      "bucket": "{{ .Oracle7.Bucket }}",
+                      "object": "{{ escapeJSON .Oracle7.Object }}",
+                      "generation": "{{ .Oracle7.Generation }}"
+                    }
+                  },
+                  "pullDeps": true
+                }
+              }
+            },
+            {
+              "id": "oracle7-configure",
+              "exec": {
+                "validate": {
+                  "script": "if pgrep  -u root falcon-sensor >/dev/null 2>&1 ; then\n  echo \"Falcon Sensor already installed... if you want to update or downgrade, please use Sensor Update Policies in the CrowdStrike console. Please see: https://falcon.crowdstrike.com/documentation/66/sensor-update-policies for more information.\"\n  exit 100\nfi\nexit 101\n",
+                  "interpreter": "SHELL"
+                },
+                "enforce": {
+                  "script": "/opt/CrowdStrike/falconctl -sf {{ .LinuxInstallParams }}\nif [[ -L \"/sbin/init\" ]]\nthen\n    systemctl start falcon-sensor\nelse\n    sudo service falcon-sensor start\nfi\nif pgrep  -u root falcon-sensor >/dev/null 2>&1 ; then\n  exit 100\nfi\nexit 101\n",
+                  "interpreter": "SHELL"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "inventoryFilters": [
+            {
+              "osShortName": "ol",
+              "osVersion": "8*"
+            }
+          ],
+          "resources": [
+            {
+              "id": "oracle8-install",
+              "pkg": {
+                "desiredState": "INSTALLED",
+                "rpm": {
+                  "source": {
+                    "gcs": {
+                      "bucket": "{{ .Oracle8.Bucket }}",
+                      "object": "{{ escapeJSON .Oracle8.Object }}",
+                      "generation": "{{ .Oracle8.Generation }}"
+                    }
+                  },
+                  "pullDeps": true
+                }
+              }
+            },
+            {
+              "id": "oracle8-configure",
+              "exec": {
+                "validate": {
+                  "script": "if pgrep  -u root falcon-sensor >/dev/null 2>&1 ; then\n  echo \"Falcon Sensor already installed... if you want to update or downgrade, please use Sensor Update Policies in the CrowdStrike console. Please see: https://falcon.crowdstrike.com/documentation/66/sensor-update-policies for more information.\"\n  exit 100\nfi\nexit 101\n",
+                  "interpreter": "SHELL"
+                },
+                "enforce": {
+                  "script": "/opt/CrowdStrike/falconctl -sf {{ .LinuxInstallParams }}\nif [[ -L \"/sbin/init\" ]]\nthen\n    systemctl start falcon-sensor\nelse\n    sudo service falcon-sensor start\nfi\nif pgrep  -u root falcon-sensor >/dev/null 2>&1 ; then\n  exit 100\nfi\nexit 101\n",
+                  "interpreter": "SHELL"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "inventoryFilters": [
+            {
+              "osShortName": "ol",
+              "osVersion": "9*"
+            }
+          ],
+          "resources": [
+            {
+              "id": "oracle9-install",
+              "pkg": {
+                "desiredState": "INSTALLED",
+                "rpm": {
+                  "source": {
+                    "gcs": {
+                      "bucket": "{{ .Oracle9.Bucket }}",
+                      "object": "{{ escapeJSON .Oracle9.Object }}",
+                      "generation": "{{ .Oracle9.Generation }}"
+                    }
+                  },
+                  "pullDeps": true
+                }
+              }
+            },
+            {
+              "id": "oracle9-configure",
+              "exec": {
+                "validate": {
+                  "script": "if pgrep  -u root falcon-sensor >/dev/null 2>&1 ; then\n  echo \"Falcon Sensor already installed... if you want to update or downgrade, please use Sensor Update Policies in the CrowdStrike console. Please see: https://falcon.crowdstrike.com/documentation/66/sensor-update-policies for more information.\"\n  exit 100\nfi\nexit 101\n",
+                  "interpreter": "SHELL"
+                },
+                "enforce": {
+                  "script": "/opt/CrowdStrike/falconctl -sf {{ .LinuxInstallParams }}\nif [[ -L \"/sbin/init\" ]]\nthen\n    systemctl start falcon-sensor\nelse\n    sudo service falcon-sensor start\nfi\nif pgrep  -u root falcon-sensor >/dev/null 2>&1 ; then\n  exit 100\nfi\nexit 101\n",
+                  "interpreter": "SHELL"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "inventoryFilters": [
+            {
+              "osShortName": "ol",
+              "osVersion": "10*"
+            }
+          ],
+          "resources": [
+            {
+              "id": "oracle10-install",
+              "pkg": {
+                "desiredState": "INSTALLED",
+                "rpm": {
+                  "source": {
+                    "gcs": {
+                      "bucket": "{{ .Oracle10.Bucket }}",
+                      "object": "{{ escapeJSON .Oracle10.Object }}",
+                      "generation": "{{ .Oracle10.Generation }}"
+                    }
+                  },
+                  "pullDeps": true
+                }
+              }
+            },
+            {
+              "id": "oracle10-configure",
               "exec": {
                 "validate": {
                   "script": "if pgrep  -u root falcon-sensor >/dev/null 2>&1 ; then\n  echo \"Falcon Sensor already installed... if you want to update or downgrade, please use Sensor Update Policies in the CrowdStrike console. Please see: https://falcon.crowdstrike.com/documentation/66/sensor-update-policies for more information.\"\n  exit 100\nfi\nexit 101\n",

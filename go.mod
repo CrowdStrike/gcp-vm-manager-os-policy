@@ -7,6 +7,7 @@ toolchain go1.24.1
 require (
 	cloud.google.com/go/storage v1.39.1
 	github.com/MakeNowJust/heredoc v1.0.0
+	github.com/blang/semver/v4 v4.0.0
 	github.com/charmbracelet/bubbles v0.18.0
 	github.com/charmbracelet/bubbletea v0.25.0
 	github.com/charmbracelet/huh v0.3.0
@@ -15,6 +16,7 @@ require (
 	github.com/mgutz/ansi v0.0.0-20200706080929-d51e80ef957d
 	github.com/muesli/termenv v0.15.2
 	github.com/spf13/cobra v1.8.0
+	github.com/stretchr/testify v1.11.1
 	golang.org/x/sync v0.12.0
 )
 
@@ -25,7 +27,6 @@ require (
 	github.com/asaskevich/govalidator v0.0.0-20230301143203-a9d515a09cc2 // indirect
 	github.com/atotto/clipboard v0.1.4 // indirect
 	github.com/aymanbagabas/go-osc52/v2 v2.0.1 // indirect
-	github.com/blang/semver/v4 v4.0.0 // indirect
 	github.com/catppuccin/go v0.2.0 // indirect
 	github.com/charmbracelet/harmonica v0.2.0 // indirect
 	github.com/containerd/console v1.0.4-0.20230313162750-1ae8d489ac81 // indirect

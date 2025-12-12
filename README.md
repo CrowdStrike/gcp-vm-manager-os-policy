@@ -15,24 +15,24 @@ The tool does the following:
 
 The CrowdStrike OS Policy currently supports the following operating systems:
 
-| Operating System                                         | Architecture  |
-| -------------------------------------------------------- | ------------- |
-| Red Hat Enterprise Linux 7                               | x86_64        |
-| Red Hat Enterprise Linux 8                               | x86_64        |
-| Red Hat Enterprise Linux 9                               | x86_64        |
-| CentOS 7                                                 | x86_64        |
-| CentOS 8                                                 | x86_64        |
-| SUSE Linux Enterprise Server 12                          | x86_64        |
-| SUSE Linux Enterprise Server 15                          | x86_64        |
-| Ubuntu 16.04                                             | x86_64        |
-| Ubuntu 18.04                                             | x86_64        |
-| Ubuntu 20.04                                             | x86_64        |
-| Ubuntu 22.04                                             | x86_64        |
-| Debian 9                                                 | x86_64        |
-| Debian 10                                                | x86_64        |
-| Debian 11                                                | x86_64        |
-| Debian 12                                                | x86_64        |
-| All Windows Versions supported by the CrowdStrike Sensor | x86_64        |
+| Operating System                                         | Architecture |
+| -------------------------------------------------------- | ------------ |
+| Red Hat Enterprise Linux 7                               | x86_64       |
+| Red Hat Enterprise Linux 8                               | x86_64       |
+| Red Hat Enterprise Linux 9                               | x86_64       |
+| Red Hat Enterprise Linux 10                              | x86_64       |
+| Oracle Linux 7                                           | x86_64       |
+| Oracle Linux 8                                           | x86_64       |
+| Oracle Linux 9                                           | x86_64       |
+| Oracle Linux 10                                          | x86_64       |
+| CentOS 8                                                 | x86_64       |
+| CentOS 9                                                 | x86_64       |
+| CentOS 10                                                | x86_64       |
+| SUSE Linux Enterprise Server 12                          | x86_64       |
+| SUSE Linux Enterprise Server 15                          | x86_64       |
+| Ubuntu 16.04, 18.04, 20.04, 22.04, 24.04                 | x86_64       |
+| Debian 9, 10, 11, 12, 13                                 | x86_64       |
+| All Windows Versions supported by the CrowdStrike Sensor | x86_64       |
 
 > Note: For supported Windows versions, check the CrowdStrike documentation.
 
@@ -52,9 +52,9 @@ OS Policy is a feature of GCP VM Manager. In order to use OS Policies to deploy 
 1. In the CrowdStrike console, navigate to **Support and resources** > **API Clients & Keys**. Click **Add new API Client**.
 2. Add the following api scopes:
 
-    | Scope               | Permission | Description                                                                  |
-    | ------------------- | ---------- | ---------------------------------------------------------------------------- |
-    | Sensor Download     | *READ*     | Allows the tool to download the sensor and grab your CID from the CrowdStrike API.      |
+    | Scope           | Permission | Description                                                                        |
+    | --------------- | ---------- | ---------------------------------------------------------------------------------- |
+    | Sensor Download | *READ*     | Allows the tool to download the sensor and grab your CID from the CrowdStrike API. |
 
 3. Click **Add** to create the API client. The next screen will display the API **CLIENT ID**, **SECRET**, and **BASE URL**. You will need all three for the next step.
 
@@ -70,11 +70,11 @@ OS Policy is a feature of GCP VM Manager. In order to use OS Policies to deploy 
 > This page is only shown once. Make sure you copy **CLIENT ID**, **SECRET**, and **BASE URL** to a secure location.
 
 4. Use `BASE_URL` to infer the `FALCON_CLOUD` value. 
-    | BASE URL            | FALCON_CLOUD |
-    | ------------------- | ------------ |
-    | `https://api.crowdstrike.com` | `us-1`       |
-    | `https://api.us-2.crowdstrike.com` | `us-2`       |
-    | `https://api.eu-1.crowdstrike.com` | `eu-1`       |
+    | BASE URL                                 | FALCON_CLOUD |
+    | ---------------------------------------- | ------------ |
+    | `https://api.crowdstrike.com`            | `us-1`       |
+    | `https://api.us-2.crowdstrike.com`       | `us-2`       |
+    | `https://api.eu-1.crowdstrike.com`       | `eu-1`       |
     | `https://api.laggar.gcw.crowdstrike.com` | `us-gov-1`   |
 
 ## Installation
