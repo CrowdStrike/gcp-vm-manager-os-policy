@@ -179,6 +179,14 @@ var createCmd = &cobra.Command{
 				BucketPrefix: fmt.Sprintf("crowdstrike/falcon/%s/linux/rhel/9", ac.Cloud.String()),
 			},
 			{
+				Filter:       "os:'*RHEL*'+os_version:'10'+platform:'linux'",
+				OsShortName:  "rhel",
+				OsVersion:    "10*",
+				Platform:     "linux",
+				Cloud:        cloud,
+				BucketPrefix: fmt.Sprintf("crowdstrike/falcon/%s/linux/rhel/10", ac.Cloud.String()),
+			},
+			{
 				Filter:      "os:'*CentOS*'+os_version:'8'+platform:'linux'",
 				OsShortName: "centos",
 				OsVersion:   "8*",
@@ -191,23 +199,23 @@ var createCmd = &cobra.Command{
 			},
 			{
 				Filter:      "os:'*CentOS Stream*'+os_version:'9'+platform:'linux'",
-				OsShortName: "centosstream",
+				OsShortName: "centos",
 				OsVersion:   "9*",
 				Platform:    "linux",
 				Cloud:       cloud,
 				BucketPrefix: fmt.Sprintf(
-					"crowdstrike/falcon/%s/linux/centos/stream/9",
+					"crowdstrike/falcon/%s/linux/centos/9",
 					ac.Cloud.String(),
 				),
 			},
 			{
 				Filter:      "os:'*CentOS Stream*'+os_version:'10'+platform:'linux'",
-				OsShortName: "centosstream",
+				OsShortName: "centos",
 				OsVersion:   "10*",
 				Platform:    "linux",
 				Cloud:       cloud,
 				BucketPrefix: fmt.Sprintf(
-					"crowdstrike/falcon/%s/linux/centos/stream/10",
+					"crowdstrike/falcon/%s/linux/centos/10",
 					ac.Cloud.String(),
 				),
 			},
@@ -234,7 +242,7 @@ var createCmd = &cobra.Command{
 				),
 			},
 			{
-				Filter:      "os:'*Ubuntu*'+os_version:'*16/18/20/22*'+os_version:!'*arm64*'+os_version:!~'zLinux'+platform:'linux'",
+				Filter:      "os:'*Ubuntu*'+os_version:'*16/18/20/22/24*'+os_version:!'*arm64*'+os_version:!~'zLinux'+platform:'linux'",
 				OsShortName: "ubuntu",
 				Platform:    "linux",
 				Cloud:       cloud,
@@ -244,7 +252,7 @@ var createCmd = &cobra.Command{
 				),
 			},
 			{
-				Filter:      "os:'Debian'+os_version:'*9/10/11*'+os_version:!'*arm64*'+platform:'linux'",
+				Filter:      "os:'Debian'+os_version:'*9/10/11/12/13*'+os_version:!'*arm64*'+platform:'linux'",
 				OsShortName: "debian",
 				Platform:    "linux",
 				Cloud:       cloud,
@@ -260,6 +268,50 @@ var createCmd = &cobra.Command{
 				Cloud:       cloud,
 				BucketPrefix: fmt.Sprintf(
 					"crowdstrike/falcon/%s/windows",
+					ac.Cloud.String(),
+				),
+			},
+			{
+				Filter:      "os:'*Oracle*'+os_version:'7'+platform:'linux'",
+				OsShortName: "ol",
+				OsVersion:   "7*",
+				Platform:    "linux",
+				Cloud:       cloud,
+				BucketPrefix: fmt.Sprintf(
+					"crowdstrike/falcon/%s/linux/oracle/7",
+					ac.Cloud.String(),
+				),
+			},
+			{
+				Filter:      "os:'*Oracle*'+os_version:'8'+platform:'linux'",
+				OsShortName: "ol",
+				OsVersion:   "8*",
+				Platform:    "linux",
+				Cloud:       cloud,
+				BucketPrefix: fmt.Sprintf(
+					"crowdstrike/falcon/%s/linux/oracle/8",
+					ac.Cloud.String(),
+				),
+			},
+			{
+				Filter:      "os:'*Oracle*'+os_version:'9'+platform:'linux'",
+				OsShortName: "ol",
+				OsVersion:   "9*",
+				Platform:    "linux",
+				Cloud:       cloud,
+				BucketPrefix: fmt.Sprintf(
+					"crowdstrike/falcon/%s/linux/oracle/9",
+					ac.Cloud.String(),
+				),
+			},
+			{
+				Filter:      "os:'*Oracle*'+os_version:'10'+platform:'linux'",
+				OsShortName: "ol",
+				OsVersion:   "10*",
+				Platform:    "linux",
+				Cloud:       cloud,
+				BucketPrefix: fmt.Sprintf(
+					"crowdstrike/falcon/%s/linux/oracle/10",
 					ac.Cloud.String(),
 				),
 			},

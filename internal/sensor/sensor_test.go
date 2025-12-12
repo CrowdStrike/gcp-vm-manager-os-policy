@@ -116,14 +116,14 @@ func TestSensor_determineBucketPath(t *testing.T) {
 			expectedPath:  "crowdstrike/falcon/us-gov-1/windows",
 		},
 		{
-			name: "CentOS Stream path with cloud removal",
+			name: "CentOS 9 path with cloud removal",
 			sensor: Sensor{
 				Platform:     "linux",
 				Cloud:        falcon.CloudEu1,
-				BucketPrefix: "crowdstrike/falcon/eu-1/linux/centos/stream/9",
+				BucketPrefix: "crowdstrike/falcon/eu-1/linux/centos/9",
 			},
 			sensorVersion: "7.30.0",
-			expectedPath:  "crowdstrike/falcon/linux/centos/stream/9",
+			expectedPath:  "crowdstrike/falcon/linux/centos/9",
 		},
 		{
 			name: "SLES with cloud removal",

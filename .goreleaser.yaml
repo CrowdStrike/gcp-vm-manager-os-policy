@@ -5,7 +5,7 @@ project_name: cs-policy
 release:
   prerelease: auto
   draft: true
-  name_template: "replace_me {{.Version}}"
+  name_template: "{{.Version}}"
 
 before:
   hooks:

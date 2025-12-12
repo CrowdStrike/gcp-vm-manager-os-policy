@@ -39,11 +39,16 @@ type Policy struct {
 	Rhel7                osResource
 	Rhel8                osResource
 	Rhel9                osResource
+	Rhel10               osResource
+	Oracle7              osResource
+	Oracle8              osResource
+	Oracle9              osResource
+	Oracle10             osResource
 	Debian               osResource
 	Ubuntu               osResource
 	Centos8              osResource
-	CentosStream9        osResource
-	CentosStream10       osResource
+	Centos9              osResource
+	Centos10             osResource
 	Windows              osResource
 	ExclusionLabelSets   []LabelSet
 	InclusionLabelSets   []LabelSet
@@ -69,12 +74,17 @@ func NewPolicy(
 		"rhel7*":          &policy.Rhel7,
 		"rhel8*":          &policy.Rhel8,
 		"rhel9*":          &policy.Rhel9,
-		"debian":          &policy.Debian,
-		"ubuntu":          &policy.Ubuntu,
-		"centos8*":        &policy.Centos8,
-		"centosstream9*":  &policy.CentosStream9,
-		"centosstream10*": &policy.CentosStream10,
-		"windows":         &policy.Windows,
+		"rhel10*":         &policy.Rhel10,
+		"ol7*":            &policy.Oracle7,
+		"ol8*":            &policy.Oracle8,
+		"ol9*":            &policy.Oracle9,
+		"ol10*":           &policy.Oracle10,
+		"debian":    &policy.Debian,
+		"ubuntu":    &policy.Ubuntu,
+		"centos8*":  &policy.Centos8,
+		"centos9*":  &policy.Centos9,
+		"centos10*": &policy.Centos10,
+		"windows":   &policy.Windows,
 	}
 
 	for _, s := range sensors {

@@ -20,17 +20,18 @@ The CrowdStrike OS Policy currently supports the following operating systems:
 | Red Hat Enterprise Linux 7                               | x86_64       |
 | Red Hat Enterprise Linux 8                               | x86_64       |
 | Red Hat Enterprise Linux 9                               | x86_64       |
+| Red Hat Enterprise Linux 10                              | x86_64       |
+| Oracle Linux 7                                           | x86_64       |
+| Oracle Linux 8                                           | x86_64       |
+| Oracle Linux 9                                           | x86_64       |
+| Oracle Linux 10                                          | x86_64       |
 | CentOS 8                                                 | x86_64       |
+| CentOS 9                                                 | x86_64       |
+| CentOS 10                                                | x86_64       |
 | SUSE Linux Enterprise Server 12                          | x86_64       |
 | SUSE Linux Enterprise Server 15                          | x86_64       |
-| Ubuntu 16.04                                             | x86_64       |
-| Ubuntu 18.04                                             | x86_64       |
-| Ubuntu 20.04                                             | x86_64       |
-| Ubuntu 22.04                                             | x86_64       |
-| Debian 9                                                 | x86_64       |
-| Debian 10                                                | x86_64       |
-| Debian 11                                                | x86_64       |
-| Debian 12                                                | x86_64       |
+| Ubuntu 16.04, 18.04, 20.04, 22.04, 24.04                 | x86_64       |
+| Debian 9, 10, 11, 12, 13                                 | x86_64       |
 | All Windows Versions supported by the CrowdStrike Sensor | x86_64       |
 
 > Note: For supported Windows versions, check the CrowdStrike documentation.
