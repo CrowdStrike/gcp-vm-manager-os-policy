@@ -35,6 +35,7 @@ var zones []string
 var skipWait bool
 var inclusionLabels []string
 var exclusionLabels []string
+var debug bool
 
 // createCmd represents the base cs-policy create when called without any subcommands
 var createCmd = &cobra.Command{
@@ -127,6 +128,7 @@ var createCmd = &cobra.Command{
 			Cloud:             cloud,
 			Context:           context.Background(),
 			UserAgentOverride: "crowdstrike-gcp-vm-manager-os-policy/v0.0.2",
+			Debug:             debug,
 		}
 
 		client, err := falcon.NewClient(&ac)
@@ -493,6 +495,8 @@ func init() {
 	createCmd.Flags().StringSliceVar(&zones, "zones", []string{}, "GCP compute zones to deploy to")
 	createCmd.Flags().
 		BoolVar(&skipWait, "skip-wait", false, "Skip waiting for the rollout of GCP OS Policy Assignments to complete")
+	createCmd.Flags().
+		BoolVar(&debug, "debug", false, "Enable debug logging")
 	// rootCmd.Flags().
 	// 	StringArrayVar(&inclusionLabels, "include-labelset", []string{}, "A comma separated list of labels. In the format of labelName:labelValue. Matches only if a VM has all the labels in the labelset. Example: Label:Value,Env:Prod")
 	// rootCmd.Flags().
