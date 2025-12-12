@@ -16,8 +16,8 @@ import (
 // Windows sensors:
 //   - Version >= 7.26.0: Cloud-agnostic for all clouds including gov
 //   - Version >= 7.19.0 and < 7.26.0:
-//     * Commercial clouds (us-1, us-2, eu-1): Cloud-agnostic (share same installer)
-//     * Gov clouds (us-gov-1): Cloud-specific path required
+//   - Commercial clouds (us-1, us-2, eu-1): Cloud-agnostic (share same installer)
+//   - Gov clouds (us-gov-1): Cloud-specific path required
 //   - Version < 7.19.0: Cloud-specific path required for all clouds
 func ShouldUseCloudAgnosticPath(version string, platform string, cloud falcon.CloudType) bool {
 	v, err := semver.ParseTolerant(version)

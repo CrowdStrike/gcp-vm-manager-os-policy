@@ -380,13 +380,13 @@
         {
           "inventoryFilters": [
             {
-              "osShortName": "centosstream",
+              "osShortName": "centos",
               "osVersion": "9*"
             }
           ],
           "resources": [
             {
-              "id": "centosstream9-install",
+              "id": "centos9-install",
               "pkg": {
                 "desiredState": "INSTALLED",
                 "rpm": {
@@ -402,7 +402,7 @@
               }
             },
             {
-              "id": "centosstream9-configure",
+              "id": "centos9-configure",
               "exec": {
                 "validate": {
                   "script": "if pgrep  -u root falcon-sensor >/dev/null 2>&1 ; then\n  echo \"Falcon Sensor already installed... if you want to update or downgrade, please use Sensor Update Policies in the CrowdStrike console. Please see: https://falcon.crowdstrike.com/documentation/66/sensor-update-policies for more information.\"\n  exit 100\nfi\nexit 101\n",
@@ -419,13 +419,13 @@
         {
           "inventoryFilters": [
             {
-              "osShortName": "centosstream",
+              "osShortName": "centos",
               "osVersion": "10*"
             }
           ],
           "resources": [
             {
-              "id": "centosstream10-install",
+              "id": "centos10-install",
               "pkg": {
                 "desiredState": "INSTALLED",
                 "rpm": {
@@ -441,7 +441,7 @@
               }
             },
             {
-              "id": "centosstream10-configure",
+              "id": "centos10-configure",
               "exec": {
                 "validate": {
                   "script": "if pgrep  -u root falcon-sensor >/dev/null 2>&1 ; then\n  echo \"Falcon Sensor already installed... if you want to update or downgrade, please use Sensor Update Policies in the CrowdStrike console. Please see: https://falcon.crowdstrike.com/documentation/66/sensor-update-policies for more information.\"\n  exit 100\nfi\nexit 101\n",

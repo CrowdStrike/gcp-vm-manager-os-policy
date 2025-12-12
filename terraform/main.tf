@@ -129,6 +129,8 @@ resource "google_compute_instance" "os_instances" {
   network_interface {
     network    = var.network
     subnetwork = var.subnetwork != "" ? var.subnetwork : null
+    access_config {
+    }
   }
 
   tags   = var.tags
