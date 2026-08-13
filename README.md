@@ -79,7 +79,10 @@ OS Policy is a feature of GCP VM Manager. In order to use OS Policies to deploy 
 
 ## Installation
 
-[Download release binaries](https://github.com/CrowdStrike/gcp-os-policy/releases/latest) that match your platform
+[Download a release binary](https://github.com/CrowdStrike/gcp-vm-manager-os-policy/releases/latest) that matches your platform.
+
+To run `cs-policy` without installing the Google Cloud CLI locally, follow the
+[Google Cloud Shell walkthrough](docs/cloud-shell.md).
 
 ## Usage
 
@@ -116,4 +119,3 @@ OS Policy is a feature of GCP VM Manager. In order to use OS Policies to deploy 
     ```bash
     cs-policy --help
     ```
-
