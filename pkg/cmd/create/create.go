@@ -497,10 +497,10 @@ func init() {
 		BoolVar(&skipWait, "skip-wait", false, "Skip waiting for the rollout of GCP OS Policy Assignments to complete")
 	createCmd.Flags().
 		BoolVar(&debug, "debug", false, "Enable debug logging")
-	// rootCmd.Flags().
-	// 	StringArrayVar(&inclusionLabels, "include-labelset", []string{}, "A comma separated list of labels. In the format of labelName:labelValue. Matches only if a VM has all the labels in the labelset. Example: Label:Value,Env:Prod")
-	// rootCmd.Flags().
-	// 	StringArrayVar(&exclusionLabels, "exclude-labelset", []string{}, "A comma separated list of labels. In the format of labelName:labelValue. Matches only if a VM has none of the labels in the labelset. Example: Label:Value,Env:Prod")
+	createCmd.Flags().
+		StringArrayVar(&inclusionLabels, "include-labelset", []string{}, "Only target VMs that have all the labels in this label set, in the format labelName:labelValue,labelName2:labelValue2. Repeat the flag to target VMs that match any of several label sets. Example: --include-labelset=crowdstrike-falcon-install:true")
+	createCmd.Flags().
+		StringArrayVar(&exclusionLabels, "exclude-labelset", []string{}, "Skip VMs that have all the labels in this label set, in the format labelName:labelValue. Repeat the flag for several label sets. Example: --exclude-labelset=env:prod")
 	createCmd.MarkFlagRequired("zones")
 
 	if falconClientId == "" {

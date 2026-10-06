@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"context"
 	_ "embed"
+	"encoding/json"
 	"errors"
 	"fmt"
 	"io"
@@ -25,9 +26,10 @@ type osResource struct {
 	Generation int64
 }
 
+// LabelSet is a set of labels that must all match a VM (logical AND).
+// A policy with several label sets matches a VM if any set matches (logical OR).
 type LabelSet struct {
-	Label string
-	Value string
+	Labels map[string]string `json:"labels"`
 }
 
 type Policy struct {
@@ -99,41 +101,55 @@ func NewPolicy(
 		}
 	}
 
-	var inclusionLabelSets []LabelSet
-	var exclusionLabelSets []LabelSet
-
-	for _, label := range inclusionLabels {
-		parts := strings.Split(label, ":")
-		switch len(parts) {
-		case 1:
-			inclusionLabelSets = append(inclusionLabelSets, LabelSet{Label: parts[0]})
-		case 2:
-			inclusionLabelSets = append(
-				inclusionLabelSets,
-				LabelSet{Label: parts[0], Value: parts[1]},
-			)
-		}
-	}
-
-	for _, label := range exclusionLabels {
-		parts := strings.Split(label, ":")
-		switch len(parts) {
-		case 1:
-			exclusionLabelSets = append(exclusionLabelSets, LabelSet{Label: parts[0]})
-		case 2:
-			exclusionLabelSets = append(
-				exclusionLabelSets,
-				LabelSet{Label: parts[0], Value: parts[1]},
-			)
-		}
-	}
+	policy.InclusionLabelSets = parseLabelSets(inclusionLabels)
+	policy.ExclusionLabelSets = parseLabelSets(exclusionLabels)
 
 	return policy
 }
 
+// parseLabelSets parses label set flags. Each value is one label set of
+// comma separated labelName:labelValue pairs, for example "Label:Value,Env:Prod".
+// A label without a value (labelName) matches any value.
+func parseLabelSets(values []string) []LabelSet {
+	var sets []LabelSet
+	for _, value := range values {
+		set := LabelSet{Labels: map[string]string{}}
+		for _, pair := range strings.Split(value, ",") {
+			pair = strings.TrimSpace(pair)
+			if pair == "" {
+				continue
+			}
+			name, val, _ := strings.Cut(pair, ":")
+			set.Labels[strings.TrimSpace(name)] = strings.TrimSpace(val)
+		}
+		if len(set.Labels) > 0 {
+			sets = append(sets, set)
+		}
+	}
+	return sets
+}
+
+// instanceFilter renders the OS Policy Assignment instance filter. Without
+// label sets it targets every VM in the zone, which is the previous behavior.
+func instanceFilter(p Policy) (string, error) {
+	filter := map[string]any{}
+	if len(p.InclusionLabelSets) > 0 {
+		filter["inclusionLabels"] = p.InclusionLabelSets
+	}
+	if len(p.ExclusionLabelSets) > 0 {
+		filter["exclusionLabels"] = p.ExclusionLabelSets
+	}
+	if len(filter) == 0 {
+		filter["all"] = true
+	}
+	b, err := json.Marshal(filter)
+	return string(b), err
+}
+
 func (p Policy) GeneratePolicy(wr io.Writer) error {
 	funcMap := template.FuncMap{
-		"escapeJSON": escapeJSON,
+		"escapeJSON":     escapeJSON,
+		"instanceFilter": instanceFilter,
 	}
 
 	t, err := template.New("policy").Funcs(funcMap).Parse(policyTemplate)

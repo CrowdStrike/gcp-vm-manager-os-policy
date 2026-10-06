@@ -651,9 +651,7 @@
       ]
     }
   ],
-  "instanceFilter": {
-    "all": true
-  },
+  "instanceFilter": {{ instanceFilter . }},
   "rollout": {
     "disruptionBudget": {
       "percent": 100
