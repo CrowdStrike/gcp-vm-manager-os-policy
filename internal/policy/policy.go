@@ -8,8 +8,11 @@ import (
 	"errors"
 	"fmt"
 	"io"
+	"os"
 	"os/exec"
 	"runtime"
+	"slices"
+	"sort"
 	"strings"
 	"sync"
 	"text/template"
@@ -195,17 +198,18 @@ func (a *Assignment) Done() bool {
 }
 
 func (a *Assignment) RollOut(ctx context.Context) error {
-	gcloudPath, err := exec.LookPath("gcloud")
+	gcloudPath, err := lookPath("gcloud")
 	if err != nil {
 		return err
 	}
 
+	name := fmt.Sprintf("crowdstrike-sensor-deploy-%s", a.Zone)
 	args := []string{
 		"compute",
 		"os-config",
 		"os-policy-assignments",
 		"create",
-		fmt.Sprintf("crowdstrike-sensor-deploy-%s", a.Zone),
+		name,
 		fmt.Sprintf("--file=%s", a.PolicyTemplatePath),
 		fmt.Sprintf("--location=%s", a.Zone),
 	}
@@ -214,11 +218,8 @@ func (a *Assignment) RollOut(ctx context.Context) error {
 		args = append(args, "--async")
 	}
 
-	bufErr := new(bytes.Buffer)
-
-	cmd := exec.CommandContext(ctx, gcloudPath, args...)
-	cmd.Stderr = bufErr
-	err = cmd.Run()
+	_, stderr, err := runGcloud(ctx, gcloudPath, args...)
+	bufErr := bytes.NewBuffer(stderr)
 
 	a.lock.Lock()
 	defer a.lock.Unlock()
@@ -230,6 +231,12 @@ func (a *Assignment) RollOut(ctx context.Context) error {
 
 	if err != nil {
 		if strings.Contains(bufErr.String(), "ALREADY_EXISTS: Requested entity already exists") {
+			// create doesn't change an existing assignment, so a rerun only succeeds
+			// if the assignment already targets the VMs that were asked for.
+			if err := a.checkExistingFilter(ctx, gcloudPath, name); err != nil {
+				a.failed = true
+				return err
+			}
 			return nil
 		}
 
@@ -238,6 +245,114 @@ func (a *Assignment) RollOut(ctx context.Context) error {
 	}
 
 	return nil
+}
+
+// lookPath and runGcloud wrap exec so tests can stub gcloud.
+var lookPath = exec.LookPath
+
+// runGcloud runs gcloud and returns its stdout and stderr.
+var runGcloud = func(ctx context.Context, gcloudPath string, args ...string) ([]byte, []byte, error) {
+	var stdout, stderr bytes.Buffer
+	cmd := exec.CommandContext(ctx, gcloudPath, args...)
+	cmd.Stdout = &stdout
+	cmd.Stderr = &stderr
+	err := cmd.Run()
+	return stdout.Bytes(), stderr.Bytes(), err
+}
+
+// checkExistingFilter returns an error when the zone's existing assignment
+// targets different VMs than the policy file, for example when switching an
+// all VMs deployment to label scoped targeting.
+func (a *Assignment) checkExistingFilter(ctx context.Context, gcloudPath, name string) error {
+	requested, err := readInstanceFilter(a.PolicyTemplatePath)
+	if err != nil {
+		return fmt.Errorf("assignment %s already exists in zone %s, and the policy file's instance filter couldn't be read: %w", name, a.Zone, err)
+	}
+
+	stdout, stderr, err := runGcloud(ctx, gcloudPath,
+		"compute", "os-config", "os-policy-assignments", "describe", name,
+		fmt.Sprintf("--location=%s", a.Zone), "--format=json")
+	if err != nil {
+		return fmt.Errorf("assignment %s already exists in zone %s, and its instance filter couldn't be checked: %s", name, a.Zone, strings.TrimSpace(string(stderr)))
+	}
+
+	var existing struct {
+		InstanceFilter instanceFilterSpec `json:"instanceFilter"`
+	}
+	if err := json.Unmarshal(stdout, &existing); err != nil {
+		return fmt.Errorf("assignment %s already exists in zone %s, and its instance filter couldn't be parsed: %w", name, a.Zone, err)
+	}
+
+	if existing.InstanceFilter.equal(requested) {
+		return nil
+	}
+
+	return fmt.Errorf("assignment %s already exists in zone %s and targets %s, not the requested %s. "+
+		"Creating it again doesn't change it. To apply the new targeting, run: "+
+		"gcloud compute os-config os-policy-assignments update %s --location=%s --file=%s",
+		name, a.Zone, existing.InstanceFilter, requested, name, a.Zone, a.PolicyTemplatePath)
+}
+
+// instanceFilterSpec is the part of an OS Policy Assignment instance filter
+// this tool sets.
+type instanceFilterSpec struct {
+	All             bool       `json:"all,omitempty"`
+	InclusionLabels []LabelSet `json:"inclusionLabels,omitempty"`
+	ExclusionLabels []LabelSet `json:"exclusionLabels,omitempty"`
+}
+
+func readInstanceFilter(path string) (instanceFilterSpec, error) {
+	b, err := os.ReadFile(path)
+	if err != nil {
+		return instanceFilterSpec{}, err
+	}
+	var file struct {
+		InstanceFilter instanceFilterSpec `json:"instanceFilter"`
+	}
+	if err := json.Unmarshal(b, &file); err != nil {
+		return instanceFilterSpec{}, err
+	}
+	return file.InstanceFilter, nil
+}
+
+// equal compares filters ignoring the order of label sets, since label sets
+// are ORed together.
+func (f instanceFilterSpec) equal(other instanceFilterSpec) bool {
+	return f.All == other.All &&
+		slices.Equal(labelSetKeys(f.InclusionLabels), labelSetKeys(other.InclusionLabels)) &&
+		slices.Equal(labelSetKeys(f.ExclusionLabels), labelSetKeys(other.ExclusionLabels))
+}
+
+func (f instanceFilterSpec) String() string {
+	if f.All {
+		return "all VMs"
+	}
+	var parts []string
+	if len(f.InclusionLabels) > 0 {
+		parts = append(parts, "VMs with labels "+strings.Join(labelSetKeys(f.InclusionLabels), " or "))
+	}
+	if len(f.ExclusionLabels) > 0 {
+		parts = append(parts, "excluding "+strings.Join(labelSetKeys(f.ExclusionLabels), " or "))
+	}
+	if len(parts) == 0 {
+		return "no VMs"
+	}
+	return strings.Join(parts, ", ")
+}
+
+// labelSetKeys returns each label set as a sorted "name:value,..." string, sorted.
+func labelSetKeys(sets []LabelSet) []string {
+	keys := make([]string, 0, len(sets))
+	for _, set := range sets {
+		pairs := make([]string, 0, len(set.Labels))
+		for name, value := range set.Labels {
+			pairs = append(pairs, name+":"+value)
+		}
+		sort.Strings(pairs)
+		keys = append(keys, strings.Join(pairs, ","))
+	}
+	sort.Strings(keys)
+	return keys
 }
 
 func formatWinArgs(cid string, args string) string {
