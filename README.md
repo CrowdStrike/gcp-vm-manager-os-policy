@@ -117,3 +117,13 @@ OS Policy is a feature of GCP VM Manager. In order to use OS Policies to deploy 
     cs-policy --help
     ```
 
+
+### Target only labeled VMs
+
+By default the OS policy targets every VM in each zone. To target only VMs with certain labels, pass `--include-labelset` (and optionally `--exclude-labelset`):
+
+```bash
+cs-policy create --bucket=example-bucket --zones=us-central1-a --include-labelset=crowdstrike-falcon-install:true
+```
+
+The tool creates one assignment per zone and doesn't change an assignment that already exists. If you run it again with different targeting, for example to switch an existing all VMs deployment to labeled VMs, it fails for that zone and prints the `gcloud compute os-config os-policy-assignments update` command that applies the new targeting.
