@@ -9,7 +9,7 @@ you to authorize Cloud Shell in the browser.
 Before you begin, make sure your account has permission to enable services,
 upload objects to the target Cloud Storage bucket, and create OS policy
 assignments. You also need a CrowdStrike API client with the `Sensor Download`
-read scope.
+read scope. Set up [GCP VM Manager](../README.md#gcp-vm-manager) on the target VMs before creating assignments.
 
 ## Select the project and prepare a bucket
 
@@ -31,10 +31,15 @@ gcloud services enable \
 ```
 
 The tool uploads Falcon sensor packages to an existing Cloud Storage bucket.
-If you do not already have one, create a bucket with a globally unique name:
+Set the bucket name, whether you use an existing bucket or create one:
 
 ```shell
 bucket_name="YOUR_GLOBALLY_UNIQUE_BUCKET_NAME"
+```
+
+If you do not already have a bucket, create it:
+
+```shell
 gcloud storage buckets create "gs://${bucket_name}" \
   --location=us-central1 \
   --uniform-bucket-level-access
@@ -49,8 +54,12 @@ published release, verify its checksum, and install the binary in your
 persistent Cloud Shell home directory:
 
 ```shell
+export PATH="$HOME/.local/bin:$PATH"
+(
+set -euo pipefail
+
 release_tag="$(curl -fsSL https://api.github.com/repos/CrowdStrike/gcp-vm-manager-os-policy/releases/latest \
-  | awk -F'"' '/"tag_name":/ { print $4; exit }')"
+  | awk -F'"' '/"tag_name":/ { print $4 }')"
 release_version="${release_tag#v}"
 
 case "$(uname -m)" in
@@ -69,9 +78,9 @@ grep "  ${archive}$" "${checksums}" | sha256sum --check -
 
 install -d "$HOME/.local/bin"
 tar -xzf "${archive}" -C "$HOME/.local/bin" cs-policy
-export PATH="$HOME/.local/bin:$PATH"
 
 cs-policy --help
+)
 ```
 
 ## Provide CrowdStrike credentials
