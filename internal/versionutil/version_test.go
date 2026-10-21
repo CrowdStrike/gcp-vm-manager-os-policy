@@ -131,6 +131,13 @@ func TestShouldUseCloudAgnosticPath(t *testing.T) {
 			want:     true,
 		},
 		{
+			name:     "Windows 7.20.11 us-3 should use cloud-agnostic path",
+			version:  "7.20.11",
+			platform: "windows",
+			cloud:    falcon.CloudUs3,
+			want:     true,
+		},
+		{
 			name:     "Windows 7.19.0 gov cloud should use cloud-specific path",
 			version:  "7.19.0",
 			platform: "windows",

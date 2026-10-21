@@ -74,6 +74,7 @@ OS Policy is a feature of GCP VM Manager. In order to use OS Policies to deploy 
     | ---------------------------------------- | ------------ |
     | `https://api.crowdstrike.com`            | `us-1`       |
     | `https://api.us-2.crowdstrike.com`       | `us-2`       |
+    | `https://api.us-3.crowdstrike.com`       | `us-3`       |
     | `https://api.eu-1.crowdstrike.com`       | `eu-1`       |
     | `https://api.laggar.gcw.crowdstrike.com` | `us-gov-1`   |
 
@@ -103,7 +104,7 @@ OS Policy is a feature of GCP VM Manager. In order to use OS Policies to deploy 
     ```
     
 > [!IMPORTANT]
-> `FALCON_CLOUD` supports the following values `autodiscover`, `us-1`, `us-2`, `eu-1`, `us-gov-1`. If not provided, the tool will default to `autodiscover`.
+> `FALCON_CLOUD` supports the following values `autodiscover`, `us-1`, `us-2`, `us-3`, `eu-1`, `us-gov-1`. If not provided, the tool will default to `autodiscover`.
 
 4. Run the tool.
 

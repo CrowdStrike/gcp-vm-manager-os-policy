@@ -481,7 +481,7 @@ func init() {
 	createCmd.PersistentFlags().
 		StringVar(&falconClientSecret, "falcon-client-secret", "", "Falcon API Client Secret. Can also bet set by the FALCON_CLIENT_SECRET environment variable")
 	createCmd.PersistentFlags().
-		StringVar(&falconCloud, "falcon-cloud", "", "Falcon Cloud one of autodiscover, us-1, us-2, eu-1, us-gov-1. Can also bet set by the FALCON_CLOUD environment variable")
+		StringVar(&falconCloud, "falcon-cloud", "", "Falcon Cloud one of autodiscover, us-1, us-2, us-3, eu-1, us-gov-1. Can also bet set by the FALCON_CLOUD environment variable")
 	createCmd.Flags().
 		StringVar(&falconCid, "falcon-cid", "", "Falcon CID to use on install. Can also bet set by the FALCON_CID environment variable. Will be pulled from the api if not provided")
 	createCmd.Flags().
