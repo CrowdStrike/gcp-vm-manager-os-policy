@@ -65,6 +65,7 @@ func PromptCloud() (string, error) {
 				huh.NewOption("autodiscover", "autodiscover"),
 				huh.NewOption("us-1", "us-1"),
 				huh.NewOption("us-2", "us-2"),
+				huh.NewOption("us-3", "us-3"),
 				huh.NewOption("eu-1", "eu-1"),
 				huh.NewOption("us-gov-1", "us-gov-1"),
 			).
